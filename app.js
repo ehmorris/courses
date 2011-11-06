@@ -96,74 +96,6 @@ function rgb2hex(rgb) {
 	}
 }
 
-$('.class').live('click', function() {
-	
-	// get all of this course's info
-	var crn = $(this).attr('id');
-	var when = $(this).children('.details').children('.when');
-	var days = $(when).dataset('days');
-	var start = $(when).dataset('start');
-	var duration = $(when).dataset('duration');
-	var title = $(this).children('.title').text();
-	
-	// check to make sure no recusions are visible (would indicate that course is already
-	// active) - if none are visible, activate course; otherwise, deactivate course
-	if (!($('#cal_class_'+crn+'_0').length)) {
-		// get random color to color the course and its calendar events
-		var rand_color_array_key = Math.floor(Math.random()*COLORS.length);
-		var color = COLORS[rand_color_array_key];
-		// remove selected color from random array to prevent duplicate colors
-		COLORS.splice([rand_color_array_key], 1);
-				
-		// activate and add color block to clicked course
-		$(this).addClass('active');
-		$(this).children('.title').prepend('<span style="background:'+color+';" class="color_block">&nbsp;</span>');
-	
-		var days_array = days.split(', ');
-		
-		$(days_array).each(function(e) {
-			// need to give each calendar item / each recursion of an item a 
-			// unique id for it to be placed correctly
-			$('#'+this).append(
-				'<div id="cal_class_'+crn+'_'+e+'" class="cal_class" data-start="'+start+'" data-duration="'+duration+'">'+
-					'<p>'+title+'</p>'+
-				'</div>'
-			);
-			
-			render_cal_class(crn+'_'+e, color); // places and colors the calendar event
-		});
-		
-		// run anytime a course has been activated
-		detect_collisions();
-	} 
-	// remove event and deactivate course
-	else {
-		// don't know how many days this event recurs, so just try to remove up to 5 recursions
-		for (var i = 0; i < 5; i++) {
-			$('#cal_class_'+crn+'_'+i).animate({
-				'opacity': 0,
-				'top': '-=10'
-			}, 60, function() {
-				$(this).remove();
-			});
-		}
-		var replace_color = rgb2hex($(this).children('.title').children('.color_block').css('background-color'));
-		COLORS.push(replace_color); // re-put the disabled color into the color array
-		
-		$(this).removeClass('active');
-		$(this).children('.title').children('.color_block').remove();
-		
-		// run anytime a course has been deactivated, to remove any 
-		// warnings for solved collisions
-		detect_collisions();
-	}
-});
-
-$('#show_selected').live('click', function() {
-
-	$('.class:not(.active)').toggle();
-});
-
 // on page load
 $(function() {
 
@@ -173,5 +105,76 @@ $(function() {
 	// space out time indicators
 	$('#time_indicators div').each(function(i) {
 		$(this).css('top', MULTIPLIER*i+'px');
+	});
+	
+	$('.class').click(function() {
+		
+		// get all of this course's info
+		var crn = $(this).attr('id');
+		var when = $(this).children('.details').children('.when');
+		var days = $(when).dataset('days');
+		var start = $(when).dataset('start');
+		var duration = $(when).dataset('duration');
+		var title = $(this).children('.title').text();
+		
+		// check to make sure no recusions are visible (would indicate that course is already
+		// active) - if none are visible, activate course; otherwise, deactivate course
+		if (!($('#cal_class_'+crn+'_0').length)) {
+			// get random color to color the course and its calendar events
+			var rand_color_array_key = Math.floor(Math.random()*COLORS.length);
+			var color = COLORS[rand_color_array_key];
+			// remove selected color from random array to prevent duplicate colors
+			COLORS.splice([rand_color_array_key], 1);
+					
+			// activate and add color block to clicked course
+			$(this).addClass('active');
+			$(this).children('.title').prepend('<span style="background:'+color+';" class="color_block">&nbsp;</span>');
+		
+			var days_array = days.split(', ');
+			
+			$(days_array).each(function(e) {
+				// need to give each calendar item / each recursion of an item a 
+				// unique id for it to be placed correctly
+				$('#'+this).append(
+					'<div id="cal_class_'+crn+'_'+e+'" class="cal_class" data-start="'+start+'" data-duration="'+duration+'">'+
+						'<p>'+title+'</p>'+
+					'</div>'
+				);
+				
+				render_cal_class(crn+'_'+e, color); // places and colors the calendar event
+			});
+			
+			// run anytime a course has been activated
+			detect_collisions();
+		} 
+		// remove event and deactivate course
+		else {
+			// don't know how many days this event recurs, so just try to remove up to 5 recursions
+			for (var i = 0; i < 5; i++) {
+				//$('#cal_class_'+crn+'_'+i).remove();
+				$('#cal_class_'+crn+'_'+i).animate({
+					'opacity': 0,
+					'top': '-=10'
+				}, 60, function() {
+					$(this).remove();
+					// run anytime a course has been deactivated, to remove any 
+					// warnings for solved collisions
+					// have to run after animation is complete
+					detect_collisions();
+				});
+			}
+			var replace_color = rgb2hex($(this).children('.title').children('.color_block').css('background-color'));
+			COLORS.push(replace_color); // re-put the disabled color into the color array
+			
+			$(this).removeClass('active');
+			$(this).children('.title').children('.color_block').remove();
+		}
+	});
+	
+	$('#show_selected').click(function() {
+	
+		$('.class:not(.active)').toggle();
+		// remove repeat class when only selected classes are displayed
+		$('.class').toggleClass('repeat');
 	});
 });

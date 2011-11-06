@@ -8,7 +8,7 @@
 		<title><?= $title ?></title>
 		<link href="normalize.css" rel="stylesheet" type="text/css" media="screen" />
 		<link href="screen.css" rel="stylesheet" type="text/css" media="screen" />
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+		<script type="text/javascript" src="jquery-1.4.3.min.js"></script>
 		<script type="text/javascript" src="dataset.js"></script>
 		<script type="text/javascript" src="app.js"></script>
 	</head>
@@ -109,11 +109,11 @@
 			?>
 		</section>
 		<section id="weekview">
-			<div class="day" id="Monday"></div>
-			<div class="day color" id="Tuesday"></div>
-			<div class="day" id="Wednesday"></div>
-			<div class="day color" id="Thursday"></div>
-			<div class="day" id="Friday"></div>
+			<div class="day color" id="Monday"></div>
+			<div class="day" id="Tuesday"></div>
+			<div class="day color" id="Wednesday"></div>
+			<div class="day" id="Thursday"></div>
+			<div class="day color" id="Friday"></div>
 			<div id="time_indicators">
 				<div>7am</div>
 				<div>8am</div>

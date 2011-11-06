@@ -1,16 +1,18 @@
 #classes {
-  background: #eee;
   float: left;
   width: 30%;
   cursor: pointer;
   padding-top: 3.15em;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.35);
+  position: relative;
+  z-index: 30;
+  box-shadow: 0 0 9px rgba(0, 0, 0, 0.3);
 }
 #classes #options {
   width: 30%;
   position: fixed;
   background: #fff;
   margin-top: -3.15em;
+  border-bottom: 1px solid #ccc;
 }
 #classes #options p {
   padding: 1em;
@@ -18,10 +20,10 @@
 }
 #classes .class {
   padding: 1em;
-  border-top: 2px solid #ccc;
+  border-top: 1px solid #ccc;
 }
 #classes .class.repeat {
-  border-top: 1px dashed #ccc;
+  border-top-style: dashed;
   font-size: 85%;
   margin-left: 1em;
 }
@@ -76,7 +78,7 @@
   content: 'Attributes: ';
 }
 #classes .class:hover, #classes .class.active {
-  background: #e0e0e0;
+  background: #eee;
 }
 #classes .class:hover .details, #classes .class.active .details {
   display: block;
@@ -91,9 +93,10 @@
   float: left;
   height: 900px;
   position: relative;
+  background: #eee;
 }
 #weekview .day.color {
-  background: #eee;
+  background: #e0e0e0;
 }
 #weekview .day .cal_class {
   position: absolute;
@@ -101,6 +104,7 @@
   margin: 0 5%;
   width: 90%;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  font-weight: bold;
   border: 1px solid #666;
   overflow: hidden;
   opacity: .85;
@@ -126,12 +130,17 @@
   border-radius: 100px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
   margin-top: 3px;
+  font-weight: bold;
+}
+#weekview #Friday .collision_warning {
+  left: -7%;
 }
 #weekview #time_indicators div {
   position: absolute;
   width: 99%;
   padding-right: 1%;
-  border-top: 1px solid #ccc;
+  border-top: 1px solid #c0c0c0;
+  color: #333;
   text-align: right;
   font-size: 80%;
 }

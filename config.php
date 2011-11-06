@@ -1,8 +1,9 @@
 <?php
 
 /* class list
+ *  - improve show selected filter
  *  - add finalize button
- *  - add filters
+ *  - add filters for each parameter
  *  - add search
  *  ~ format detail data
  *
@@ -29,6 +30,5 @@ try {
 catch (PDOException $e) {
 	echo $e->getMessage();
 }
-
 
 ?>
