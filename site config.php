@@ -1,7 +1,9 @@
 <?php
 
 /* class list
+ *  - improve show selected filter
  *  - add finalize button
+ *  - hide full classes
  *  - add filters for each parameter
  *  - add search
  *  ~ format detail data
@@ -29,10 +31,10 @@
 
 $title = 'Class Search';
 
-$hostname = '127.0.0.1';
-$username = 'root';
-$password = 'root';
-$database = 'classes';
+$hostname = 'localhost';
+$username = 'ehmorris_classes';
+$password = 'L1s82XJaM4';
+$database = 'ehmorris_classes';
 
 try {
 	$connection = new PDO("mysql:host=$hostname;dbname=$database", $username, $password);

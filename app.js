@@ -6,6 +6,11 @@ var NUM_HOURS = (END_HOUR + 12) - START_HOUR;
 // divide window height by number of hours indicated
 // gets height of each hour space
 var MULTIPLIER = Math.floor(window.innerHeight / NUM_HOURS);
+// update multiplier everytime the window is resized
+$(window).resize(function() {
+	MULTIPLIER = Math.floor(window.innerHeight / NUM_HOURS);
+});
+
 
 // selection of colors randomly chosen for highlighting selected courses
 var COLORS = ['#ac725e', '#d06b64', '#f83a22', '#fa573c', '#ff7537', '#ffad46', '#42d692',
@@ -14,7 +19,8 @@ var COLORS = ['#ac725e', '#d06b64', '#f83a22', '#fa573c', '#ff7537', '#ffad46', 
 			  '#f691b2', '#cd74e6', '#a47ae2'];
 
 // places and colors a given calendar event
-function render_cal_class(id, color) {
+// parameter animate is an optional boolean, defaults to false
+function render_cal_class(id, color, animate) {
 	// place the calendar event
 	var start = MULTIPLIER * ($('#cal_class_'+id).dataset('start') - START_HOUR);
 	var duration = MULTIPLIER * $('#cal_class_'+id).dataset('duration');
@@ -22,7 +28,9 @@ function render_cal_class(id, color) {
 	$('#cal_class_'+id).css('top', start+'px');
 	// color the calendar event
 	$('#cal_class_'+id).css('background', color);
-	$('#cal_class_'+id).hide().fadeIn(60);
+	if (animate) {
+		$('#cal_class_'+id).hide().fadeIn(60);
+	}
 }
 
 // displays a warning near the overlapping area of a collision
@@ -107,6 +115,20 @@ $(function() {
 		$(this).css('top', MULTIPLIER*i+'px');
 	});
 	
+	// update indicators, calendar height, and calendar events everytime the window is resized
+	$(window).resize(function() {
+		$('#time_indicators div').each(function(i) {
+			$(this).css('top', MULTIPLIER*i+'px');
+		});
+		$('.day').height(window.innerHeight);
+		$('.cal_class').each(function() {
+			var id = $(this).attr('id');
+			id = id.substring(10);
+			var color = $(this).css('background-color');
+			render_cal_class(id, color);
+		});
+	});
+	
 	$('.class').click(function() {
 		
 		// get all of this course's info
@@ -141,7 +163,7 @@ $(function() {
 					'</div>'
 				);
 				
-				render_cal_class(crn+'_'+e, color); // places and colors the calendar event
+				render_cal_class(crn+'_'+e, color, true); // places and colors the calendar event
 			});
 			
 			// run anytime a course has been activated
@@ -171,24 +193,46 @@ $(function() {
 		}
 	});
 	
-	// use change event and checked selectors - click event and toggle were
-	// returning strange results - need to be more verbose
-	// trigger hides all non active classes, and temporarily removes the repeat
-	// class so that no classes are indented in the selected list
-	$('#show_selected').click(function() {
-		
-		// toggle checkbox state when the paragraph container is clicked
+	// toggle checkbox state when an option paragraph container is clicked
+	$('#options p').click(function() {
 		$(this).children('input').attr('checked', !$(this).children('input').attr('checked'));
-		
+	});
+	
+	// use change event and checked selectors - click event and toggle were
+	// returning strange results - need to be more verbose.
+	// hides all non active classes, and temporarily removes the repeat
+	// class so that no classes are indented in the selected list
+	$('#hide_unselected').click(function() {
 		if ($(this).children('input').is(':checked')) {
 			$('.class:not(.active)').hide();
-			
 			$('.class.active.repeat').addClass('repeat_hide');
-			$('.class.active.repeat').removeClass('repeat');
 		} else {
 			$('.class:not(.active)').show();
-			$('.class.active.repeat_hide').addClass('repeat');
 			$('.class.active.repeat_hide').removeClass('repeat_hide');
+		}
+	});
+	
+	// hides all full classes
+	$('#hide_full').click(function() {
+		if ($(this).children('input').is(':checked')) {
+			$('.class .capacity.warning').parent().hide();
+			// prevent orphaned indented lists
+			$('.class:not(.repeat) .capacity.warning').parent().each(function () {
+				if ($(this).next().hasClass('repeat')) {
+					$(this).nextUntil('.class:not(.repeat)').filter(function() {
+			        	return $(this).hasClass('repeat') && (!($(this).children('.capacity').hasClass('warning')));
+					}).filter(':first').addClass('repeat_hide');
+				}
+			});
+		} else {
+			$('.class .capacity.warning').parent().show();
+			$('.class:not(.repeat) .capacity.warning').parent().each(function () {
+				if ($(this).next().hasClass('repeat')) {
+					$(this).nextUntil('.class:not(.repeat)').filter(function() {
+			        	return $(this).hasClass('repeat') && (!($(this).children('.capacity').hasClass('warning')));
+					}).filter(':first').removeClass('repeat_hide');
+				}
+			});
 		}
 	});
 });
