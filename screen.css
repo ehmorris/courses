@@ -1,0 +1,137 @@
+#classes {
+  background: #eee;
+  float: left;
+  width: 30%;
+  cursor: pointer;
+  padding-top: 3.15em;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.35);
+}
+#classes #options {
+  width: 30%;
+  position: fixed;
+  background: #fff;
+  margin-top: -3.15em;
+}
+#classes #options p {
+  padding: 1em;
+  margin: 0;
+}
+#classes .class {
+  padding: 1em;
+  border-top: 2px solid #ccc;
+}
+#classes .class.repeat {
+  border-top: 1px dashed #ccc;
+  font-size: 85%;
+  margin-left: 1em;
+}
+#classes .class span {
+  display: block;
+}
+#classes .class span.title {
+  font-size: 125%;
+  font-weight: bold;
+  margin-bottom: .25em;
+}
+#classes .class span.title .color_block {
+  display: inline-block;
+  height: .77em;
+  width: .77em;
+  margin-right: .25em;
+  border: 1px solid #666;
+}
+#classes .class span.credits {
+  float: right;
+}
+#classes .class span.credits:after {
+  content: ' credit(s)';
+}
+#classes .class span.capacity {
+  float: right;
+  margin-right: .5em;
+  padding: 0 .25em;
+}
+#classes .class span.capacity.warning {
+  color: #ff0000;
+}
+#classes .class .details {
+  display: none;
+  margin-top: 1em;
+  padding-top: 1em;
+  border-top: 1px dashed #ccc;
+}
+#classes .class .details span.location:before {
+  content: 'Location: ';
+}
+#classes .class .details span.date:before {
+  content: 'Date Range: ';
+}
+#classes .class .details span.crn:before {
+  content: 'CRN: ';
+}
+#classes .class .details span.course_number:before {
+  content: 'Course Number: ';
+}
+#classes .class .details span.attribute:before {
+  content: 'Attributes: ';
+}
+#classes .class:hover, #classes .class.active {
+  background: #e0e0e0;
+}
+#classes .class:hover .details, #classes .class.active .details {
+  display: block;
+}
+#weekview {
+  width: 70%;
+  position: fixed;
+  right: 0;
+}
+#weekview .day {
+  width: 20%;
+  float: left;
+  height: 900px;
+  position: relative;
+}
+#weekview .day.color {
+  background: #eee;
+}
+#weekview .day .cal_class {
+  position: absolute;
+  z-index: 10;
+  margin: 0 5%;
+  width: 90%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+  border: 1px solid #666;
+  overflow: hidden;
+  opacity: .85;
+}
+#weekview .day .cal_class.collision {
+  border: 1px solid red;
+}
+#weekview .day .cal_class p {
+  padding: .5em;
+  margin: 0;
+}
+#weekview .collision_warning {
+  display: block;
+  background: red;
+  position: absolute;
+  z-index: 20;
+  color: #fff;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  left: 90%;
+  text-align: center;
+  border-radius: 100px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+  margin-top: 3px;
+}
+#weekview #time_indicators div {
+  position: absolute;
+  width: 99%;
+  padding-right: 1%;
+  border-top: 1px solid #ccc;
+  text-align: right;
+  font-size: 80%;
+}
