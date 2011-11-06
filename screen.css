@@ -10,7 +10,7 @@
 #classes #options {
   width: 30%;
   position: fixed;
-  background: #fff;
+  background: #ffffe5;
   margin-top: -3.15em;
   border-bottom: 1px solid #ccc;
 }
@@ -42,16 +42,14 @@
   margin-right: .25em;
   border: 1px solid #666;
 }
-#classes .class span.credits {
+#classes .class span.credits, #classes .class span.capacity {
   float: right;
+  padding: .1em .25em;
+  background: #ddd;
+  margin-left: .15em;
 }
 #classes .class span.credits:after {
   content: ' credit(s)';
-}
-#classes .class span.capacity {
-  float: right;
-  margin-right: .5em;
-  padding: 0 .25em;
 }
 #classes .class span.capacity.warning {
   color: #ff0000;

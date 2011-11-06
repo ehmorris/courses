@@ -171,10 +171,24 @@ $(function() {
 		}
 	});
 	
+	// use change event and checked selectors - click event and toggle were
+	// returning strange results - need to be more verbose
+	// trigger hides all non active classes, and temporarily removes the repeat
+	// class so that no classes are indented in the selected list
 	$('#show_selected').click(function() {
-	
-		$('.class:not(.active)').toggle();
-		// remove repeat class when only selected classes are displayed
-		$('.class').toggleClass('repeat');
+		
+		// toggle checkbox state when the paragraph container is clicked
+		$(this).children('input').attr('checked', !$(this).children('input').attr('checked'));
+		
+		if ($(this).children('input').is(':checked')) {
+			$('.class:not(.active)').hide();
+			
+			$('.class.active.repeat').addClass('repeat_hide');
+			$('.class.active.repeat').removeClass('repeat');
+		} else {
+			$('.class:not(.active)').show();
+			$('.class.active.repeat_hide').addClass('repeat');
+			$('.class.active.repeat_hide').removeClass('repeat_hide');
+		}
 	});
 });

@@ -9,7 +9,7 @@
     #options {
     	width:30%;
     	position:fixed;
-    	background:#fff;
+    	background:#ffffe5;
     	margin-top:-3.15em;
     	border-bottom:1px solid #ccc;
     	p {
@@ -39,16 +39,18 @@
 				    border:1px solid #666;
 				}
 			}
-			&.credits {
+			&.credits, &.capacity {
 				float:right;
+				padding:.1em .25em;
+				background:#ddd;
+				margin-left:.15em;
+			}
+			&.credits {
 				&:after {
 					content: ' credit(s)';
 				}
 			}
 			&.capacity {
-				float:right;
-				margin-right:.5em;
-				padding:0 .25em;
 				&.warning {
 					color:#ff0000;
 				}

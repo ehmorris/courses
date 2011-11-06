@@ -15,7 +15,7 @@
 	<body>
 		<section id="classes">
 			<div id="options">
-				<p><input type="checkbox" id="show_selected" /> show selected</p>
+				<p id="show_selected"><input type="checkbox" /> show selected</p>
 			</div>
 			<?php
 			
@@ -78,7 +78,7 @@
 					$seats_taken = $class_data['capacity'] - $class_data['remaining'];
 					
 					$seats_warning = '';
-					if ($seats_taken >= ($class_data['capacity'] -1 ))
+					if ($seats_taken >= ($class_data['capacity']))
 						$seats_warning = 'warning';
 					
 					$course_repeat = '';
