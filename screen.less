@@ -1,7 +1,6 @@
 #classes {
     float: left;
     width: 30%;
-    cursor:pointer;
     padding-top:4.5em;
     position:relative;
     z-index:30;
@@ -16,9 +15,15 @@
     	p {
     		padding:.75em 1em 0 1em;
     		margin:0;
+    		label {
+    			cursor:pointer;
+    		}
     	}
     }
 	.class {
+		cursor:pointer;
+		padding:1em;
+		border-top:1px solid #ccc;
 		&.repeat {
 			border-top-style:dashed;
 			font-size:85%;
@@ -29,8 +34,6 @@
 			font-size:100%;
 			margin-left:0;
 		}
-		padding:1em;
-		border-top:1px solid #ccc;
 		span {
 			display:block;
 			&.title {

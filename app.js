@@ -194,8 +194,8 @@ $(function() {
 	});
 	
 	// toggle checkbox state when an option paragraph container is clicked
-	$('#options p').click(function() {
-		$(this).children('input').attr('checked', !$(this).children('input').attr('checked'));
+	$('#options p label').click(function() {
+		$(this).siblings('input').attr('checked', !$(this).siblings('input').attr('checked'));
 	});
 	
 	// use change event and checked selectors - click event and toggle were

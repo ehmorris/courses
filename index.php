@@ -15,8 +15,8 @@
 	<body>
 		<section id="classes">
 			<div id="options">
-				<p id="hide_unselected"><input type="checkbox" /> hide all unselected</p>
-				<p id="hide_full"><input type="checkbox" /> hide all full</p>
+				<p id="hide_unselected"><input type="checkbox" /> <label>hide all unselected</label></p>
+				<p id="hide_full"><input type="checkbox" /> <label>hide all full</label></p>
 			</div>
 			<?php
 			

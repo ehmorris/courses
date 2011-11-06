@@ -19,7 +19,7 @@
  *  - show to /r/NEU and facebook
  *
  * future
- *  - indicate dependencies such as prerequisites / corequisites
+ *  - indicate dependencies such as prerequisites / corequisites (labs, tools classes)
  *  - add a compare feature to compare your calendar with another
  *  - add a find this professor on ratemyprofessor.com
  *  - integrate w/ facebook / current school's classes database

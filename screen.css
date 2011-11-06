@@ -1,150 +1,20 @@
-#classes {
-  float: left;
-  width: 30%;
-  cursor: pointer;
-  padding-top: 4.5em;
-  position: relative;
-  z-index: 30;
-  box-shadow: 0 0 9px rgba(0, 0, 0, 0.3);
-}
-#classes #options {
-  width: 30%;
-  position: fixed;
-  background: #ffffe5;
-  margin-top: -4.5em;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: .75em;
-}
-#classes #options p {
-  padding: .75em 1em 0 1em;
-  margin: 0;
-}
-#classes .class {
-  padding: 1em;
-  border-top: 1px solid #ccc;
-}
-#classes .class.repeat {
-  border-top-style: dashed;
-  font-size: 85%;
-  margin-left: 1em;
-}
-#classes .class.repeat_hide {
-  border-top-style: solid;
-  font-size: 100%;
-  margin-left: 0;
-}
-#classes .class span {
-  display: block;
-}
-#classes .class span.title {
-  font-size: 125%;
-  font-weight: bold;
-  margin-bottom: .25em;
-}
-#classes .class span.title .color_block {
-  display: inline-block;
-  height: .77em;
-  width: .77em;
-  margin-right: .25em;
-  border: 1px solid #666;
-}
-#classes .class span.credits, #classes .class span.capacity {
-  float: right;
-  padding: .1em .25em;
-  background: #ddd;
-  margin-left: .15em;
-}
-#classes .class span.credits:after {
-  content: ' credit(s)';
-}
-#classes .class span.capacity.warning {
-  color: #ff0000;
-}
-#classes .class .details {
-  display: none;
-  margin-top: 1em;
-  padding-top: 1em;
-  border-top: 1px dashed #ccc;
-}
-#classes .class .details span.location:before {
-  content: 'Location: ';
-}
-#classes .class .details span.date:before {
-  content: 'Date Range: ';
-}
-#classes .class .details span.crn:before {
-  content: 'CRN: ';
-}
-#classes .class .details span.course_number:before {
-  content: 'Course Number: ';
-}
-#classes .class .details span.attribute:before {
-  content: 'Attributes: ';
-}
-#classes .class:hover, #classes .class.active {
-  background: #eee;
-}
-#classes .class:hover .details, #classes .class.active .details {
-  display: block;
-}
-#weekview {
-  width: 70%;
-  position: fixed;
-  right: 0;
-}
-#weekview .day {
-  width: 20%;
-  float: left;
-  height: 900px;
-  position: relative;
-  background: #eee;
-}
-#weekview .day.color {
-  background: #e0e0e0;
-}
-#weekview .day .cal_class {
-  position: absolute;
-  z-index: 10;
-  margin: 0 5%;
-  width: 90%;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
-  font-weight: bold;
-  border: 1px solid #666;
-  overflow: hidden;
-  opacity: .85;
-}
-#weekview .day .cal_class.collision {
-  border: 1px solid red;
-}
-#weekview .day .cal_class p {
-  padding: .5em;
-  margin: 0;
-}
-#weekview .collision_warning {
-  display: block;
-  background: red;
-  position: absolute;
-  z-index: 20;
-  color: #fff;
-  width: 30px;
-  height: 30px;
-  line-height: 30px;
-  left: 90%;
-  text-align: center;
-  border-radius: 100px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
-  margin-top: 3px;
-  font-weight: bold;
-}
-#weekview #Friday .collision_warning {
-  left: -7%;
-}
-#weekview #time_indicators div {
-  position: absolute;
-  width: 99%;
-  padding-right: 1%;
-  border-top: 1px solid #c0c0c0;
-  color: #333;
-  text-align: right;
-  font-size: 80%;
-}
+#classes{float:left;width:30%;padding-top:4.5em;position:relative;z-index:30;box-shadow:0 0 9px rgba(0, 0, 0, 0.3);}#classes #options{width:30%;position:fixed;background:#ffffe5;margin-top:-4.5em;border-bottom:1px solid #ccc;padding-bottom:.75em;}#classes #options p{padding:.75em 1em 0 1em;margin:0;}#classes #options p label{cursor:pointer;}
+#classes .class{cursor:pointer;padding:1em;border-top:1px solid #ccc;}#classes .class.repeat{border-top-style:dashed;font-size:85%;margin-left:1em;}
+#classes .class.repeat_hide{border-top-style:solid;font-size:100%;margin-left:0;}
+#classes .class span{display:block;}#classes .class span.title{font-size:125%;font-weight:bold;margin-bottom:.25em;}#classes .class span.title .color_block{display:inline-block;height:.77em;width:.77em;margin-right:.25em;border:1px solid #666;}
+#classes .class span.credits,#classes .class span.capacity{float:right;padding:.1em .25em;background:#ddd;margin-left:.15em;}
+#classes .class span.credits:after{content:' credit(s)';}
+#classes .class span.capacity.warning{color:#ff0000;}
+#classes .class .details{display:none;margin-top:1em;padding-top:1em;border-top:1px dashed #ccc;}
+#classes .class .details span.location:before{content:'Location: ';}
+#classes .class .details span.date:before{content:'Date Range: ';}
+#classes .class .details span.crn:before{content:'CRN: ';}
+#classes .class .details span.course_number:before{content:'Course Number: ';}
+#classes .class .details span.attribute:before{content:'Attributes: ';}
+#classes .class:hover,#classes .class.active{background:#eee;}#classes .class:hover .details,#classes .class.active .details{display:block;}
+#weekview{width:70%;position:fixed;right:0;}#weekview .day{width:20%;float:left;height:900px;position:relative;background:#eee;}#weekview .day.color{background:#e0e0e0;}
+#weekview .day .cal_class{position:absolute;z-index:10;margin:0 5%;width:90%;box-shadow:0 2px 6px rgba(0, 0, 0, 0.25);font-weight:bold;border:1px solid #666;overflow:hidden;opacity:.85;}#weekview .day .cal_class.collision{border:1px solid red;}
+#weekview .day .cal_class p{padding:.5em;margin:0;}
+#weekview .collision_warning{display:block;background:red;position:absolute;z-index:20;color:#fff;width:30px;height:30px;line-height:30px;left:90%;text-align:center;border-radius:100px;box-shadow:0 2px 6px rgba(0, 0, 0, 0.35);margin-top:3px;font-weight:bold;}
+#weekview #Friday .collision_warning{left:-7%;}
+#weekview #time_indicators div{position:absolute;width:99%;padding-right:1%;border-top:1px solid #c0c0c0;color:#333;text-align:right;font-size:80%;}
