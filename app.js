@@ -29,7 +29,21 @@ function render_cal_class(id, color, animate) {
 	// color the calendar event
 	$('#cal_class_'+id).css('background', color);
 	if (animate) {
-		$('#cal_class_'+id).hide().fadeIn(60);
+		// make it small first, then animate it popping into its correct size
+		$('#cal_class_'+id).css({
+			'width': '-=20%',
+			'height': '-=20px',
+			'margin-top': '10px',
+			'margin-left': '10%',
+			'opacity': 0
+		});
+		$('#cal_class_'+id).animate({
+			'opacity': 1,
+			'margin-top': '0',
+			'margin-left': '5%',
+			'height': '+=20px',
+			'width': '90%'
+		}, 40);
 	}
 }
 
