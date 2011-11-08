@@ -10,6 +10,7 @@
 		<link href="screen.css" rel="stylesheet" type="text/css" media="screen" />
 		<script type="text/javascript" src="jquery-1.6.4.min.js"></script>
 		<script type="text/javascript" src="dataset.js"></script>
+		<script type="text/javascript" src="flip.js"></script>
 		<script type="text/javascript" src="app.js"></script>
 	</head>
 	<body>
