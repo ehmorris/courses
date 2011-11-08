@@ -69,7 +69,7 @@ function render_cal_class(id, color, animate) {
             'height': '+=40px',
             'font-size': '100%',
             'width': '90%'
-        }, 45);
+        }, 40);
     }
 }
 
@@ -111,7 +111,7 @@ function detect_collisions() {
     $('.cal_class').not('.collision').each(function() {
     
         // make sure this isn't the only course in its column
-        if ($(this).siblings('.cal_class').length > 1) {
+        if ($(this).siblings('.cal_class').length > 0) {
         
             var parent_id = $(this).attr('id');
             var parent_start = $(this).dataset('start');
@@ -119,10 +119,7 @@ function detect_collisions() {
             var parent_end = eval(parent_start)+eval(parent_duration);
             
             // test for collision against all other cal items in the column
-            $(this).siblings('.cal_class')
-                   .not('#'+parent_id)
-                   .not('.collision')
-                   .each(function() {
+            $(this).siblings('.cal_class').not('.collision').each(function() {
                    
                 var id = $(this).attr('id');
                 var start = $(this).dataset('start');

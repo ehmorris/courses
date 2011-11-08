@@ -7,8 +7,6 @@
  *  ~ format detail data
  *
  * calendar
- *  - fix vertical scaling of overlap errors
- *  - create hover effect that reveals more info
  *  - add close button
  *  - show ticker of credits selected out of credits limit
  *  - add a finalize button that returns a list of CRNs
