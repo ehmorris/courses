@@ -54,10 +54,8 @@
 				background:#ddd;
 				margin-left:.15em;
 			}
-			&.credits {
-				&:after {
-					content: ' credit(s)';
-				}
+			&.credits:after {
+				content: ' credit(s)';
 			}
 			&.capacity {
 				&.warning {
@@ -77,30 +75,20 @@
 				&.when {
 					// stuff
 				}
-				&.location {
-					&:before {
-						content: 'Location: ';
-					}
+				&.location:before {
+					content: 'Location: ';
 				}
-				&.date {
-					&:before {
-						content: 'Date Range: ';
-					}
+				&.date:before {
+					content: 'Date Range: ';
 				}
-				&.crn {
-					&:before {
-						content: 'CRN: ';
-					}
+				&.crn:before {
+					content: 'CRN: ';
 				}
-				&.course_number {
-					&:before {
-						content: 'Course Number: ';
-					}
+				&.course_number:before {
+					content: 'Course Number: ';
 				}
-				&.attribute {
-					&:before {
-						content: 'Attributes: ';
-					}
+				&.attribute:before {
+					content: 'Attributes: ';
 				}
 			}
 		}
@@ -127,6 +115,7 @@
 			background:#e0e0e0;
 		}
 		.cal_class {
+			cursor:pointer;
 			position:absolute;
 			z-index:10;
 			margin:0 5%;
@@ -135,13 +124,55 @@
 			font-weight:bold;
 			border:1px solid #666;
 			overflow:hidden;
-			opacity:.85;
+			opacity:.8;
 			&.collision {
 				border:1px solid red;
 			}
 			p {
 				padding:.5em;
 				margin:0;
+			}
+			.details {
+				display:none;
+				font-weight:normal;
+				font-size:85%;
+				padding:.5em 0;
+				span {
+					padding:0 .5em;
+					display:block;
+					&.credits:after {
+						content: ' credit(s)';
+					}
+					&.capacity:after {
+						content: ' seats taken';
+					}
+					&.professor:before {
+						content: 'Prof: ';
+					}
+					&.location:before {
+						content: 'Location: ';
+					}
+					&.date:before {
+						content: 'Date Range: ';
+					}
+					&.crn:before {
+						content: 'CRN: ';
+					}
+					&.course_number:before {
+						content: 'Course Number: ';
+					}
+					&.attribute:before {
+						content: 'Attributes: ';
+					}
+				}
+			}
+			&.active {
+				p {
+					display:none;
+				}
+				.details {
+					display:block;
+				}
 			}
 		}
 	}

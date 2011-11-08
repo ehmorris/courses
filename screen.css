@@ -13,8 +13,18 @@
 #classes .class .details span.attribute:before{content:'Attributes: ';}
 #classes .class:hover,#classes .class.active{background:#eee;}#classes .class:hover .details,#classes .class.active .details{display:block;}
 #weekview{width:70%;position:fixed;right:0;}#weekview .day{width:20%;float:left;height:900px;position:relative;background:#eee;}#weekview .day.color{background:#e0e0e0;}
-#weekview .day .cal_class{position:absolute;z-index:10;margin:0 5%;width:90%;box-shadow:0 2px 6px rgba(0, 0, 0, 0.25);font-weight:bold;border:1px solid #666;overflow:hidden;opacity:.85;}#weekview .day .cal_class.collision{border:1px solid red;}
+#weekview .day .cal_class{cursor:pointer;position:absolute;z-index:10;margin:0 5%;width:90%;box-shadow:0 2px 6px rgba(0, 0, 0, 0.25);font-weight:bold;border:1px solid #666;overflow:hidden;opacity:.8;}#weekview .day .cal_class.collision{border:1px solid red;}
 #weekview .day .cal_class p{padding:.5em;margin:0;}
+#weekview .day .cal_class .details{display:none;font-weight:normal;font-size:85%;padding:.5em 0;}#weekview .day .cal_class .details span{padding:0 .5em;display:block;}#weekview .day .cal_class .details span.credits:after{content:' credit(s)';}
+#weekview .day .cal_class .details span.capacity:after{content:' seats taken';}
+#weekview .day .cal_class .details span.professor:before{content:'Prof: ';}
+#weekview .day .cal_class .details span.location:before{content:'Location: ';}
+#weekview .day .cal_class .details span.date:before{content:'Date Range: ';}
+#weekview .day .cal_class .details span.crn:before{content:'CRN: ';}
+#weekview .day .cal_class .details span.course_number:before{content:'Course Number: ';}
+#weekview .day .cal_class .details span.attribute:before{content:'Attributes: ';}
+#weekview .day .cal_class.active p{display:none;}
+#weekview .day .cal_class.active .details{display:block;}
 #weekview .collision_warning{display:block;background:red;position:absolute;z-index:20;color:#fff;width:30px;height:30px;line-height:30px;left:90%;text-align:center;border-radius:100px;box-shadow:0 2px 6px rgba(0, 0, 0, 0.35);margin-top:3px;font-weight:bold;}
 #weekview #Friday .collision_warning{left:-7%;}
 #weekview #time_indicators div{position:absolute;width:99%;padding-right:1%;border-top:1px solid #c0c0c0;color:#333;text-align:right;font-size:80%;}
