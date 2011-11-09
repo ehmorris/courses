@@ -6,18 +6,16 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title><?= $title ?></title>
-		<link href="normalize.css" rel="stylesheet" type="text/css" media="screen" />
-		<link href="screen.css" rel="stylesheet" type="text/css" media="screen" />
-		<script type="text/javascript" src="jquery-1.6.4.min.js"></script>
-		<script type="text/javascript" src="dataset.js"></script>
-		<script type="text/javascript" src="flip.js"></script>
-		<script type="text/javascript" src="app.js"></script>
+		<link type="text/css" href="css/normalize.css" rel="stylesheet" media="screen" />
+		<link type="text/css" href="css/screen.css" rel="stylesheet" media="screen" />
+		<script type="text/javascript" src="js/jquery-1.6.4.min.js"></script>
+		<script type="text/javascript" src="js/dataset.js"></script>
+		<script type="text/javascript" src="js/app.js"></script>
 	</head>
 	<body>
 		<section id="classes">
 			<div id="options">
-				<p id="hide_unselected"><input type="checkbox" /> <label>hide all unselected</label></p>
-				<p id="hide_full"><input type="checkbox" /> <label>hide all full</label></p>
+				<p>filters</p>
 			</div>
 			<?php
 			

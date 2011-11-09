@@ -12,6 +12,7 @@
  *  - add a finalize button that returns a list of CRNs
  *  - add a "share my calendar" option
  *  - disabled finalize button if there are any errors (credit limit or overlap)
+ *  - export to ical
  *
  * after
  *  - get more data
