@@ -1,0 +1,27 @@
+TODO
+
+class list
+ - add finalize button
+ - add filters for each parameter
+ - add search
+ ~ format detail data
+
+calendar
+ - add close button
+ - show ticker of credits selected out of credits limit
+ - add a finalize button that returns a list of CRNs
+ - add a "share my calendar" option
+ - disabled finalize button if there are any errors (credit limit or overlap)
+ - export to ical
+
+after
+ - get more data
+ - show to /r/NEU and facebook
+
+future
+ - indicate dependencies such as prerequisites / corequisites (labs, tools classes)
+ - add a compare feature to compare your calendar with another
+ - add a find this professor on ratemyprofessor.com
+ - integrate w/ facebook / current school's classes database
+ - integrate w/ degree audit to show classes they need to take
+ - option to only display classes that are possible for user to take
