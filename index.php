@@ -16,13 +16,34 @@
 		<section id="classes">
 			<div id="top_pane" class="pane">
 				<div id="profile">
-					<p id="student_name">Edwin Morris</p>
-					<p id="student_major">Graphic Design</p>
-					<p id="student_credit_limit">21</p>
-					<p id="semester">Spring 2012</p>
+					<span id="student_credit_limit" data-credit-limit="21">21</span>
+					<span id="semester">Spring 2012</span>
+					<span id="student_name">John Smith</span>
+					<span id="student_major">Computer and Information Science</span>
 				</div>
 				<div id="filters">
-					<p>Filters</p>
+					<form>
+						<input class="filter_search" id="search_class" type="text" placeholder="Search by class name..." />
+						<input class="filter_search" id="search_professor" type="text" placeholder="Search by professor..." />
+						<select id="filter_sort">
+							<option>Sort by...</option>
+							<option>Name</option>
+							<option>CRN</option>
+							<option>Course number</option>
+						</select>
+						<span id="filter_credits">
+							<input type="checkbox" checked="checked" /> 1
+							<input type="checkbox" checked="checked" /> 2
+							<input type="checkbox" checked="checked" /> 3
+							<input type="checkbox" checked="checked" /> 4
+							credit(s)
+						</span>
+						<select id="filter_major">
+							<option>Select major...</option>
+							<option>Computer and Information Science</option>
+							<option>Graphic Design</option>
+						</select>
+					</form>
 				</div>
 			</div>
 			<?php
@@ -95,7 +116,7 @@
 					
 					echo '<div id="'.$class_data['crn'].'" class="class '.$course_repeat.'">';
 						echo '<span class="title">'.$class_data['title'].'</span>';
-						echo '<span class="credits">'.$class_data['credits'].'</span>';
+						echo '<span class="credits" data-credits="'.$class_data['credits'].'">'.$class_data['credits'].'</span>';
 						echo '<span class="capacity '.$seats_warning.'">'.$seats_taken.'/'.$class_data['capacity'].'</span>';
 						echo '<span class="professor">'.$class_data['instructor'].'</span>';
 						echo '<div class="details">';
@@ -116,8 +137,8 @@
 			
 			?>
 			<div id="bottom_pane" class="pane">
-				<div id="classes_taken">
-					<p>Classes I've taken</p>
+				<div id="req_classes">
+					<span>Classes I need to take</span>
 				</div>
 			</div>
 		</section>

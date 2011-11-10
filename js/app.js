@@ -14,6 +14,10 @@ var NUM_HOURS = (END_HOUR + 12) - START_HOUR;
  */
 var MULTIPLIER = Math.floor(window.innerHeight / NUM_HOURS);
 
+/* constant used to keep track of active credits
+ */
+var CREDITS = 0;
+
 /* selection of colors randomly chosen for highlighting selected courses
  */
  
@@ -38,6 +42,27 @@ var COLORSh = ['#ac725e', '#d06b64', '#f83a22', '#fa573c', '#ff7537',
                '#fbe983', '#fad165', '#92e1c0', '#9fe1e7', '#9fc6e7', 
                '#4986e7', '#9a9cff', '#b99aff', '#c2c2c2', '#cabdbf', 
                '#cca6ac', '#f691b2', '#cd74e6', '#a47ae2'];
+
+/* updates the constant CREDIT and updates the visible profile with 
+ * the new credit count
+ */
+function update_credits(positivep, increment) {
+	if (positivep) {
+		CREDITS += parseInt(increment);
+	} else {
+		CREDITS -= parseInt(increment);
+	}
+	
+	var credit_limit = parseInt($('#student_credit_limit').dataset('credit-limit'));
+	
+	$('#student_credit_limit').text(CREDITS+'/'+credit_limit);
+	
+	if (CREDITS >= credit_limit) {
+		$('#student_credit_limit').css('color', 'red');
+	} else {
+		$('#student_credit_limit').removeAttr('style');
+	}
+}
 
 /* checks if the text of a calendar item fits within the visible area;
  * if not, it recursively sizes it down until it does; expects id to be
@@ -222,6 +247,10 @@ $(function() {
         $(this).css('top', MULTIPLIER*i+'px');
     });
     
+    /* prepend the current selected credits (0) to the credit counter
+     */
+    $('#student_credit_limit').prepend(CREDITS+'/');
+    
     /* everything that happens when you click to reveal a class on the calendar
      */
     $('.class').click(function() {
@@ -302,10 +331,13 @@ $(function() {
                         '</div>'+
                     '</div>'
                 );
-                
+                                
                 // place, color, animate, etc. the added course
                 render_cal_class(crn+'_'+e, color, true);
             });
+            
+            // add to credits counter
+            update_credits(1, $(this).children('.credits').dataset('credits'));
             
             // run anytime a course has been activated
             detect_collisions();
@@ -341,6 +373,9 @@ $(function() {
             
             // replace the disabled color into the color array
             COLORS.push(replace_color);
+            
+            // subtract from credits counter
+            update_credits(0, $(this).children('.credits').dataset('credits'));
             
             $(this).removeClass('active');
             $(this).find('.color_block').remove();
