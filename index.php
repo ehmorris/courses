@@ -14,8 +14,16 @@
 	</head>
 	<body>
 		<section id="classes">
-			<div id="options">
-				<p>filters</p>
+			<div id="top_pane" class="pane">
+				<div id="profile">
+					<p id="student_name">Edwin Morris</p>
+					<p id="student_major">Graphic Design</p>
+					<p id="student_credit_limit">21</p>
+					<p id="semester">Spring 2012</p>
+				</div>
+				<div id="filters">
+					<p>Filters</p>
+				</div>
 			</div>
 			<?php
 			
@@ -107,6 +115,11 @@
 				}
 			
 			?>
+			<div id="bottom_pane" class="pane">
+				<div id="classes_taken">
+					<p>Classes I've taken</p>
+				</div>
+			</div>
 		</section>
 		<section id="weekview">
 			<div class="day color" id="Monday"></div>

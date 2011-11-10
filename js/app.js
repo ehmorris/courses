@@ -39,6 +39,18 @@ var COLORSh = ['#ac725e', '#d06b64', '#f83a22', '#fa573c', '#ff7537',
                '#4986e7', '#9a9cff', '#b99aff', '#c2c2c2', '#cabdbf', 
                '#cca6ac', '#f691b2', '#cd74e6', '#a47ae2'];
 
+/* checks if the text of a calendar item fits within the visible area;
+ * if not, it recursively sizes it down until it does; expects id to be
+ * the id of a .cal_class dom object
+ */
+function size_text(id) {
+	// get the height correct first, don't worry about the width
+    if ($(id).children('p')[0].scrollHeight >= $(id).height()) {
+        $(id).children('p').css('font-size', '-=1%');
+        size_text(id);
+    }
+}
+
 /* places, colors, etc. a given calendar event; parameter animate is an 
  * optional boolean, defaults to false
  */
@@ -52,8 +64,11 @@ function render_cal_class(id, color, animate) {
     $(id).css({
         'height': duration+'px',
         'top': start+'px',
-        'background': color
+        'background': color,
     });
+    
+    // reset resized title text from size_text() on each render
+    $(id).children('p').removeAttr('style');
     
     // popping animation - shrink down and then pop out
     if (animate) {
@@ -74,10 +89,10 @@ function render_cal_class(id, color, animate) {
             'width': '90%'
         }, 40, function() {
             // make sure text fits inside cell
-            if ($(id).children('p').height() >= $(this).height()) {
-                $(id).children('p').css('font-size', '85%');
-            }
+            size_text(id);
         });
+    } else {
+    	size_text(id);
     }
 }
 
@@ -245,11 +260,20 @@ $(function() {
                     
             // activate and add color block to clicked course
             $(this).addClass('active');
-            $(this).children('.title').prepend(
-                '<span style="background:'+color+';" class="color_block">'+
-                    '&nbsp;'+
-                '</span>'
-            );
+            // if it's a repeat class with a hidden title
+            if ($(this).hasClass('repeat')) {
+	            $(this).children('.professor').prepend(
+	                '<span style="background:'+color+';" class="color_block">'+
+	                    '&nbsp;'+
+	                '</span>'
+	            );
+            } else {
+	            $(this).children('.title').prepend(
+	                '<span style="background:'+color+';" class="color_block">'+
+	                    '&nbsp;'+
+	                '</span>'
+	            );
+            }
             
             // split days string into an array which we can loop through
             var days_array = days.split(', ');
@@ -311,8 +335,7 @@ $(function() {
                 });
             }
             
-            var replace_color = $(this).children('.title')
-                                       .children('.color_block')
+            var replace_color = $(this).find('.color_block')
                                        .css('background-color');
             // replace_color = rgb2hex(replace_color);
             
@@ -320,7 +343,7 @@ $(function() {
             COLORS.push(replace_color);
             
             $(this).removeClass('active');
-            $(this).children('.title').children('.color_block').remove();
+            $(this).find('.color_block').remove();
         }
     });
     
