@@ -1,7 +1,7 @@
 .circle{border-radius:500px;-moz-border-radius:500px;-webkit-border-radius:500px;}
 body{font-family:"Helvetica","Lucida Grande","Arial","sans-serif";}body input,body select{font:"Helvetica","Lucida Grande","Arial","sans-serif";}
 .pane{width:30%;position:fixed;}.pane div{padding:1em;margin:0;}
-.pane#top_pane{background:#ffffe5;margin-top:-4.9em;border-bottom:1px solid #ccc;}.pane#top_pane:hover #filters{display:block;}
+.pane#top_pane{background:#ffffe5;margin-top:-4.9em;border-bottom:1px solid #ccc;z-index:90;}.pane#top_pane:hover #filters{display:block;}
 .pane#top_pane span{display:block;}
 .pane#top_pane #profile #student_name{font-size:125%;font-weight:bold;margin-bottom:.25em;}
 .pane#top_pane #profile #student_credit_limit,.pane#top_pane #profile #semester{float:right;padding:.1em .25em;background:#ddd;margin-left:.15em;margin-top:.15em;}
@@ -10,7 +10,10 @@ body{font-family:"Helvetica","Lucida Grande","Arial","sans-serif";}body input,bo
 .pane#top_pane #filters form #filter_sort{border:1px solid #ccc;float:left;width:40%;margin-bottom:.5em;}
 .pane#top_pane #filters form #filter_credits{float:left;margin-left:.5em;clear:right;}
 .pane#top_pane #filters form #filter_major{border:1px solid #ccc;width:100%;}
-.pane#bottom_pane{background:#fff;border-top:1px solid #ccc;bottom:0;}
+.pane#bottom_pane{background:#fff;border-top:1px solid #ccc;bottom:0;z-index:40;}.pane#bottom_pane span{display:block;}
+.pane#bottom_pane .preview_text{padding:1em;cursor:pointer;background:#ffffe5;}
+.pane#bottom_pane #req_classes{padding:0;}
+.pane#bottom_pane .class{display:none;}
 #classes{float:left;width:30%;padding-top:4.9em;position:relative;z-index:30;box-shadow:0 0 9px rgba(0, 0, 0, 0.3);-moz-box-shadow:0 0 9px rgba(0, 0, 0, 0.3);-webkit-box-shadow:0 0 9px rgba(0, 0, 0, 0.3);}#classes .class{cursor:pointer;padding:1em;border-top:1px solid #ccc;}#classes .class.repeat{border:none;font-size:85%;padding-left:2em;overflow:hidden;border-top:1px dashed #ccc;}#classes .class.repeat span.title,#classes .class.repeat span.credits,#classes .class.repeat .details span.crn,#classes .class.repeat .details span.course_number,#classes .class.repeat .details span.date,#classes .class.repeat .details span.attribute{display:none;}
 #classes .class.repeat span.professor .color_block{display:inline-block;height:.77em;width:.77em;margin-right:.25em;border:1px solid #666;}
 #classes .class.repeat .details{border-top:none;padding-top:0;}

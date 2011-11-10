@@ -251,6 +251,29 @@ $(function() {
      */
     $('#student_credit_limit').prepend(CREDITS+'/');
     
+    /* toggle slide the "classes I need to take" pane on click
+     */
+    $('#bottom_pane .preview_text').click(function() {
+    	if (!($('#bottom_pane').hasClass('visible'))) {
+	    	// set calculated top value so that animation scrolling up is possible
+	    	$('#bottom_pane').css('top', window.innerHeight - $('#bottom_pane').height());
+	        $('#bottom_pane').animate({
+	            'top': '4.9em'
+	        }, 80);
+	    	$('#bottom_pane .class').show();
+	    	$('#bottom_pane').addClass('visible');
+    	} else {
+    		$('#bottom_pane').css('top', 'auto');
+	    	// set calculated bottom value so that animation scrolling down is possible
+	    	$('#bottom_pane').css('bottom', window.innerHeight - $('#bottom_pane').height());
+	        $('#bottom_pane').animate({
+	            'bottom': 0
+	        }, 80);
+    		$('#bottom_pane .class').hide();
+    		$('#bottom_pane').removeClass('visible');
+    	}
+    });
+    
     /* everything that happens when you click to reveal a class on the calendar
      */
     $('.class').click(function() {

@@ -138,7 +138,35 @@
 			?>
 			<div id="bottom_pane" class="pane">
 				<div id="req_classes">
-					<span>Classes I need to take</span>
+					<span class="preview_text">Classes I need to take</span>
+					<div id="999" class="class">
+						<span class="title">Algorithms and Data</span>
+						<span class="credits" data-credits="4">4</span>
+						<span class="capacity ">28/60</span>
+						<span class="professor">Karl J. Lieberherr (P)</span>
+						<div class="details">
+							<span class="when" data-days="Monday, Wednesday" data-start="14.83" data-end="16.50" data-duration="1.67">Monday, Wednesday - 2:50pm to 4:30pm</span>
+							<span class="location">WVH 108</span>
+							<span class="date">09/07-12/07</span>
+							<span class="crn">11398</span>
+							<span class="course_number">4800</span>
+							<span class="attribute">NU Core Math/Anly Think Lvl 2 and Computer&amp;Info Sci</span>
+						</div>
+					</div>
+					<div id="999" class="class">
+						<span class="title">Algorithms and Data</span>
+						<span class="credits" data-credits="4">4</span>
+						<span class="capacity ">28/60</span>
+						<span class="professor">Karl J. Lieberherr (P)</span>
+						<div class="details">
+							<span class="when" data-days="Monday, Wednesday" data-start="14.83" data-end="16.50" data-duration="1.67">Monday, Wednesday - 2:50pm to 4:30pm</span>
+							<span class="location">WVH 108</span>
+							<span class="date">09/07-12/07</span>
+							<span class="crn">11398</span>
+							<span class="course_number">4800</span>
+							<span class="attribute">NU Core Math/Anly Think Lvl 2 and Computer&amp;Info Sci</span>
+						</div>
+					</div>
 				</div>
 			</div>
 		</section>
