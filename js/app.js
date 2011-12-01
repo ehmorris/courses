@@ -36,7 +36,7 @@ var COLORS =  ['rgba(172,114,94,'+co+')', 'rgba(208,107,100,'+co+')',
                'rgba(194,194,194,'+co+')', 'rgba(202,189,191,'+co+')', 
                'rgba(204,166,172,'+co+')', 'rgba(246,145,178,'+co+')', 
                'rgba(205,116,230,'+co+')', 'rgba(164,122,226,'+co+')'];
-               
+                
 var COLORSh = ['#ac725e', '#d06b64', '#f83a22', '#fa573c', '#ff7537', 
                '#ffad46', '#42d692', '#16a765', '#7bd148', '#b3dc6c', 
                '#fbe983', '#fad165', '#92e1c0', '#9fe1e7', '#9fc6e7', 
@@ -70,8 +70,8 @@ function update_credits(positivep, increment) {
  */
 function size_text(id) {
 	// get the height correct first, don't worry about the width
-    if ($(id).children('p')[0].scrollHeight >= $(id).height()) {
-        $(id).children('p').css('font-size', '-=1%');
+    if ($(id).children('.summary').children('p')[0].scrollHeight >= $(id).height()) {
+        $(id).children('.summary').children('p').css('font-size', '-=1%');
         size_text(id);
     }
 }
@@ -210,31 +210,35 @@ $(function() {
      * window is resized
      */
     $(window).resize(function() {
+  		// only evaluate everything every 5 pixels
+    	if (!(eval(parseInt(window.innerHeight) % 5))) {
     
-        MULTIPLIER = Math.floor(window.innerHeight / NUM_HOURS);
+	        MULTIPLIER = Math.floor(window.innerHeight / NUM_HOURS);
+	        
+	        $('.day').height(window.innerHeight);
+	        
+	        $('#time_indicators div').each(function(i) {
+	            $(this).css('top', MULTIPLIER*i+'px');
+	        });
+	        
+	        /* to fix the .cal_class height when an expanded detail pane is 
+	         * reverted
+	         */
+	        $('.cal_class.active').removeClass('active').css({
+	            'padding-bottom': '0',
+	            'z-index': 10
+	        });
+	        
+	        $('.cal_class').each(function() {
+	            var id = $(this).attr('id').substring(10);
+	            var color = $(this).css('background-color');
+	            
+	            render_cal_class(id, color);
+	        });
+	        
+	        detect_collisions();
         
-        $('.day').height(window.innerHeight);
-        
-        $('#time_indicators div').each(function(i) {
-            $(this).css('top', MULTIPLIER*i+'px');
-        });
-        
-        /* to fix the .cal_class height when an expanded detail pane is 
-         * reverted
-         */
-        $('.cal_class.active').removeClass('active').css({
-            'padding-bottom': '0',
-            'z-index': 10
-        });
-        
-        $('.cal_class').each(function() {
-            var id = $(this).attr('id').substring(10);
-            var color = $(this).css('background-color');
-            
-            render_cal_class(id, color);
-        });
-        
-        detect_collisions();
+        }
     });
 
     /* set calendar height
@@ -341,7 +345,7 @@ $(function() {
                          'class="cal_class"'+
                          'data-start="'+start+'"'+
                          'data-duration="'+duration+'">'+
-                    '<p>'+title+'</p>'+
+                    '<div class="summary"><p>'+title+'</p></div>'+
                         '<div class="details">'+
                         '<span class="crn">'+crn+'</span>'+
                         '<span class="course_number">'+course_number+'</span>'+
