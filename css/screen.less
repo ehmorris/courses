@@ -1,345 +1,335 @@
 .box-shadow (@vdistance, @blur, @opacity) {
-	box-shadow:0 @vdistance @blur rgba(0,0,0,@opacity);
-	-moz-box-shadow:0 @vdistance @blur rgba(0,0,0,@opacity);
-	-webkit-box-shadow:0 @vdistance @blur rgba(0,0,0,@opacity);
+  box-shadow:0 @vdistance @blur rgba(0,0,0,@opacity);
+  -moz-box-shadow:0 @vdistance @blur rgba(0,0,0,@opacity);
+  -webkit-box-shadow:0 @vdistance @blur rgba(0,0,0,@opacity);
 }
 
 .inset-box-shadow(@vdistance, @blur, @opacity) {
-	box-shadow:inset 0 @vdistance @blur rgba(0,0,0,@opacity);
-	-moz-box-shadow:inset 0 @vdistance @blur rgba(0,0,0,@opacity);
-	-webkit-box-shadow:inset 0 @vdistance @blur rgba(0,0,0,@opacity);
+  box-shadow:inset 0 @vdistance @blur rgba(0,0,0,@opacity);
+  -moz-box-shadow:inset 0 @vdistance @blur rgba(0,0,0,@opacity);
+  -webkit-box-shadow:inset 0 @vdistance @blur rgba(0,0,0,@opacity);
 }
 
 .border-radius(@radius) {
-	border-radius:@radius;
-	-moz-border-radius:@radius;
-	-webkit-border-radius:@radius;
+  border-radius:@radius;
+  -moz-border-radius:@radius;
+  -webkit-border-radius:@radius;
 }
 
 .circle {
-	border-radius:500px;
-	-moz-border-radius:500px;
-	-webkit-border-radius:500px;
+  border-radius:500px;
+  -moz-border-radius:500px;
+  -webkit-border-radius:500px;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
 body {
-	font-family:"Helvetica", "Lucida Grande", "Arial", "sans-serif";
-	input, select {
-		font:"Helvetica", "Lucida Grande", "Arial", "sans-serif";
-	}	
+  font-family:"Helvetica", "Lucida Grande", "Arial", "sans-serif";
+  input, select {
+    font:"Helvetica", "Lucida Grande", "Arial", "sans-serif";
+  }  
 }
 
 .pane {
-	width:30%;
-	position:fixed;
-	div {
-		padding:1em;
-		margin:0;
-	}
-	&#top_pane {
-		background:#ffffe5;
-		margin-top:-4.9em;
-		border-bottom:1px solid #ccc;
-		z-index:90;
-		&:hover {
-			#filters {
-				display:block;
-			}
-		}
-		span {
-			display:block;
-		}
-		#profile {
-			#student_name {
-				font-size:125%;
-				font-weight:bold;
-				margin-bottom:.25em;
-			}
-			#student_credit_limit, #semester {
-				float:right;
-				padding:.1em .25em;
-				background:#ddd;
-				margin-left:.15em;
-				margin-top:.15em;
-			}
-			#student_credit_limit:after {
-				content:' credits';
-			}
-		}
-		#filters {
-			display:none;
-			padding-top:0;
-			form {
-				font-size:85%;
-				.filter_search {
-					width:100%;
-					margin:0;
-					padding:.25em 0;
-					display:block;
-					border:none;
-					border-top:1px solid #ccc;
-					border-bottom:1px solid #ccc;
-					.border-radius(5px);
-					text-indent:.5em;
-					margin-bottom:.5em;
-					outline:none;
-					&:focus {
-						border-color:#666;
-					}
-				}
-				#filter_sort {
-					border:1px solid #ccc;
-					float:left;
-					width:40%;
-					margin-bottom:.5em;
-				}
-				#filter_credits {
-					float:left;
-					margin-left:.5em; 
-					clear:right;
-				}
-				#filter_major {
-					border:1px solid #ccc;
-					width:100%;
-				}
-			}
-		}
-	}
-	&#bottom_pane {
-		background:#fff;
-		border-top:1px solid #ccc;
-		bottom:0;
-		z-index:40;
-		span {
-			display:block;
-		}
-		.preview_text {
-			padding:1em;
-			cursor:pointer;
-			background:#ffffe5;
-		}
-		#req_classes {
-			padding:0;
-		}
-		.class {
-			display:none;
-		}
-	}
+  width:30%;
+  position:fixed;
+
+  div {
+    padding:1em;
+    margin:0;
+  }
+
+  &#top_pane {
+    background:#ffffe5;
+    margin-top:-8.8em;
+    border-bottom:1px solid #ccc;
+    z-index:90;
+
+    span {
+      display:block;
+    }
+
+    #filters {
+      form {
+        font-size:85%;
+
+        .filter_search {
+          width:100%;
+          margin:0;
+          padding:.25em 0;
+          display:block;
+          border:none;
+          border-top:1px solid #ccc;
+          border-bottom:1px solid #ccc;
+          .border-radius(5px);
+          text-indent:.5em;
+          margin-bottom:.5em;
+          outline:none;
+
+          &:focus {
+            border-color:#666;
+          }
+        }
+
+        #filter_sort {
+          border:1px solid #ccc;
+          float:left;
+          width:40%;
+          margin-bottom:.5em;
+        }
+
+        #filter_credits {
+          float:left;
+          margin-left:.5em; 
+          clear:right;
+        }
+
+        #filter_major {
+          border:1px solid #ccc;
+          width:100%;
+        }
+      }
+    }
+  }
 }
 
 #classes {
-    float: left;
-    width: 30%;
-    padding-top:4.9em;
-    padding-bottom:3.25em;
-    position:relative;
-    z-index:30;
-    .box-shadow(0, 9px, .3);
-	.class {
-		cursor:pointer;
-		padding:1em;
-		border-top:1px solid #ccc;
-		&.repeat {
-			border:none;
-			font-size:85%;
-			padding-left:2em;
-			overflow:hidden;
-			border-top:1px dashed #ccc;
-			//.inset-box-shadow(-2px, 3px, .15);
-			span.title, span.credits, .details span.crn, 
-			.details span.course_number, .details span.date, 
-			.details span.attribute {
-				display:none;
-			}
-			span.professor {
-				.color_block {
-				    display:inline-block;
-				    height:.77em;
-				    width:.77em;
-				    margin-right:.25em;
-				    border:1px solid #666;
-				}
-			}
-			.details {
-				border-top:none;
-				padding-top:0;
-			}
-		}
-		&.repeat_hide {
-			border-top-style:solid;
-			font-size:100%;
-			margin-left:0;
-		}
-		&.full, &.inactive {
-			display:none;
-		}
-		span {
-			display:block;
-			&.title {
-				font-size:125%;
-				font-weight:bold;
-				margin-bottom:.25em;
-				.color_block {
-				    display:inline-block;
-				    height:.77em;
-				    width:.77em;
-				    margin-right:.25em;
-				    border:1px solid #666;
-				}
-			}
-			&.credits, &.capacity {
-				float:right;
-				padding:.1em .25em;
-				background:#ddd;
-				margin-left:.15em;
-			}
-			&.credits:after {
-				content: ' credit(s)';
-			}
-			&.capacity {
-				&.warning {
-					color:#ff0000;
-				}
-			}
-		}
-		.details {
-			display:none;
-			margin-top:1em;
-			padding-top:1em;
-			border-top:1px dashed #ccc;
-			span {
-				&.location:before {
-					content: 'Location: ';
-				}
-				&.date:before {
-					content: 'Date Range: ';
-				}
-				&.crn:before {
-					content: 'CRN: ';
-				}
-				&.course_number:before {
-					content: 'Course Number: ';
-				}
-				&.attribute:before {
-					content: 'Attributes: ';
-				}
-			}
-		}
-		&:hover, &.active {
-			background:#eee;
-			.details {
-				display:block;
-			}
-		}
-	}
+  float: left;
+  width: 30%;
+  padding-top:8.8em;
+  position:relative;
+  z-index:30;
+  .box-shadow(0, 9px, .3);
+
+  .class {
+    cursor:pointer;
+    padding:1em;
+    border-top:1px solid #ccc;
+
+    &.repeat {
+      border:none;
+      font-size:85%;
+      padding-left:2em;
+      overflow:hidden;
+      border-top:1px dashed #ccc;
+      //.inset-box-shadow(-2px, 3px, .15);
+
+      span.title, span.credits, .details span.crn, 
+      .details span.course_number, .details span.date, 
+      .details span.attribute {
+        display:none;
+      }
+
+      span.professor {
+        .color_block {
+            display:inline-block;
+            height:.77em;
+            width:.77em;
+            margin-right:.25em;
+            border:1px solid #666;
+        }
+      }
+
+      .details {
+        border-top:none;
+        padding-top:0;
+      }
+    }
+
+    &.repeat_hide {
+      border-top-style:solid;
+      font-size:100%;
+      margin-left:0;
+    }
+
+    &.full, &.inactive {
+      display:none;
+    }
+
+    span {
+      display:block;
+      &.title {
+        font-size:125%;
+        font-weight:bold;
+        margin-bottom:.25em;
+
+        .color_block {
+            display:inline-block;
+            height:.77em;
+            width:.77em;
+            margin-right:.25em;
+            border:1px solid #666;
+        }
+      }
+
+      &.credits, &.capacity {
+        float:right;
+        padding:.1em .25em;
+        background:#ddd;
+        margin-left:.15em;
+      }
+
+      &.credits:after {
+        content: ' credit(s)';
+      }
+      &.capacity {
+        &.warning {
+          color:#ff0000;
+        }
+      }
+    }
+    .details {
+      display:none;
+      margin-top:1em;
+      padding-top:1em;
+      border-top:1px dashed #ccc;
+
+      span {
+        &.location:before {
+          content: 'Location: ';
+        }
+        &.date:before {
+          content: 'Date Range: ';
+        }
+        &.crn:before {
+          content: 'CRN: ';
+        }
+        &.course_number:before {
+          content: 'Course Number: ';
+        }
+        &.attribute:before {
+          content: 'Attributes: ';
+        }
+      }
+    }
+    &:hover, &.active {
+      background:#eee;
+
+      .details {
+        display:block;
+      }
+    }
+  }
 }
 
 #weekview {
-	width:70%;
-	position:fixed;
-	right:0;
-	.day {
-		width:20%;
-		float:left;
-		height:900px;
-		position:relative;
-		background:#eee;
-		&.color {
-			background:#e0e0e0;
-		}
-		.cal_class {
-			cursor:pointer;
-			position:absolute;
-			z-index:10;
-			margin:0 5%;
-			width:90%;
-			.box-shadow(2px, 6px, .25);
-			.border-radius(3px);
-			font-weight:bold;
-			border:1px solid #666;
-			overflow:hidden;
-			&.collision {
-				border:1px solid red;
-			}
-			p {
-				padding:.5em;
-				margin:0;
-			}
-			.details {
-				display:none;
-				font-weight:normal;
-				font-size:85%;
-				padding:.5em 0;
-				span {
-					padding:0 .5em;
-					display:block;
-					&.credits:after {
-						content: ' credit(s)';
-					}
-					&.capacity:after {
-						content: ' seats taken';
-					}
-					&.professor:before {
-						content: 'Prof: ';
-					}
-					&.location:before {
-						content: 'Location: ';
-					}
-					&.date:before {
-						content: 'Date Range: ';
-					}
-					&.crn:before {
-						content: 'CRN: ';
-					}
-					&.course_number:before {
-						content: 'Course Number: ';
-					}
-					&.attribute:before {
-						content: 'Attributes: ';
-					}
-				}
-			}
-			&.active {
-				.summary {
-					display:none;
-				}
-				.details {
-					display:block;
-				}
-			}
-		}
-	}
-	.collision_warning {
-		display:block;
-		background:red;
-		position:absolute;
-		z-index:20;
-		color:#fff;
-		width:30px;
-		height:30px;
-		line-height:30px;
-		left:90%;
-		text-align:center;
-		.circle;
-		.box-shadow(2px, 6px, .35);
-		margin-top:3px;
-		font-weight:bold;
-	}
-	#Friday .collision_warning {
-		left:-7%;
-	}
-	#time_indicators {
-		div {
-			position:absolute;
-			width:99%;
-			padding-right:1%;
-			border-top:1px solid #c0c0c0;
-			color:#333;
-			text-align:right;
-			font-size:80%;
-		}
-	}
+  width:70%;
+  position:fixed;
+  right:0;
+
+  .day {
+    width:20%;
+    float:left;
+    height:900px;
+    position:relative;
+    background:#eee;
+
+    &.color {
+      background:#e0e0e0;
+    }
+
+    .cal_class {
+      cursor:pointer;
+      position:absolute;
+      z-index:10;
+      margin:0 5%;
+      width:90%;
+      .box-shadow(2px, 6px, .25);
+      .border-radius(3px);
+      font-weight:bold;
+      border:1px solid #666;
+      overflow:hidden;
+
+      &.collision {
+        border:1px solid red;
+      }
+
+      p {
+        padding:.5em;
+        margin:0;
+      }
+
+      .details {
+        display:none;
+        font-weight:normal;
+        font-size:85%;
+        padding:.5em 0;
+
+        span {
+          padding:0 .5em;
+          display:block;
+
+          &.credits:after {
+            content: ' credit(s)';
+          }
+          &.capacity:after {
+            content: ' seats taken';
+          }
+          &.professor:before {
+            content: 'Prof: ';
+          }
+          &.location:before {
+            content: 'Location: ';
+          }
+          &.date:before {
+            content: 'Date Range: ';
+          }
+          &.crn:before {
+            content: 'CRN: ';
+          }
+          &.course_number:before {
+            content: 'Course Number: ';
+          }
+          &.attribute:before {
+            content: 'Attributes: ';
+          }
+        }
+      }
+
+      &.active {
+        .summary {
+          display:none;
+        }
+
+        .details {
+          display:block;
+        }
+      }
+    }
+  }
+
+  .collision_warning {
+    display:block;
+    background:red;
+    position:absolute;
+    z-index:20;
+    color:#fff;
+    width:30px;
+    height:30px;
+    line-height:30px;
+    left:90%;
+    text-align:center;
+    .circle;
+    .box-shadow(2px, 6px, .35);
+    margin-top:3px;
+    font-weight:bold;
+  }
+
+  #Friday .collision_warning {
+    left:-7%;
+  }
+
+  #time_indicators {
+    div {
+      position:absolute;
+      width:99%;
+      padding-right:1%;
+      border-top:1px solid #c0c0c0;
+      color:#333;
+      text-align:right;
+      font-size:80%;
+    }
+  }
 }

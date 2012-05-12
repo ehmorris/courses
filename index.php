@@ -2,197 +2,158 @@
 
 <!doctype html>
 <html dir="ltr" lang="en-US">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title><?= $title ?></title>
-		<link type="text/css" href="css/normalize.css" rel="stylesheet" media="screen" />
-		<link type="text/css" href="css/screen.css" rel="stylesheet" media="screen" />
-		<script type="text/javascript" src="js/jquery-1.6.4.min.js"></script>
-		<script type="text/javascript" src="js/dataset.js"></script>
-		<script type="text/javascript" src="js/app.js"></script>
-	</head>
-	<body>
-		<section id="classes">
-			<div id="top_pane" class="pane">
-				<div id="profile">
-					<span id="student_credit_limit" data-credit-limit="21">21</span>
-					<span id="semester">Spring 2012</span>
-					<span id="student_name">John Smith</span>
-					<span id="student_major">Computer and Information Science</span>
-				</div>
-				<div id="filters">
-					<form>
-						<input class="filter_search" id="search_class" type="text" placeholder="Search by class name..." />
-						<input class="filter_search" id="search_professor" type="text" placeholder="Search by professor..." />
-						<select id="filter_sort">
-							<option>Sort by...</option>
-							<option>Name</option>
-							<option>CRN</option>
-							<option>Course number</option>
-						</select>
-						<span id="filter_credits">
-							<input type="checkbox" checked="checked" /> 1
-							<input type="checkbox" checked="checked" /> 2
-							<input type="checkbox" checked="checked" /> 3
-							<input type="checkbox" checked="checked" /> 4
-							credit(s)
-						</span>
-						<select id="filter_major">
-							<option>Select major...</option>
-							<option>Computer and Information Science</option>
-							<option>Graphic Design</option>
-						</select>
-					</form>
-				</div>
-			</div>
-			<?php
-			
-				$all_class_data = $connection->query("SELECT * FROM classes");
-				
-				// takes day string formatted like "MWR" and converts it to a
-				// full string like "Monday, Wednesday, Thursday"
-				function convert_day_string($day_string) {
-				
-					$days_array = str_split($day_string);
-					foreach ($days_array as $key => $day) {
-						if (strtolower($day) == 'm')
-							$days_array[$key] = 'Monday';
-						if (strtolower($day) == 't')
-							$days_array[$key] = 'Tuesday';
-						if (strtolower($day) == 'w')
-							$days_array[$key] = 'Wednesday';
-						if (strtolower($day) == 'r')
-							$days_array[$key] = 'Thursday';
-						if (strtolower($day) == 'f')
-							$days_array[$key] = 'Friday';
-					}
-					
-					return implode(', ', $days_array);
-				}
-				
-				// takes a time string like "3:30pm" and converts it to a unix
-				// timestamp
-				// this funciton returns a 12 hour based time value like 3:30pm,
-				// and a decimal, 24 hour based time value like 15.5
-				function convert_time($time) {
-										
-					$twelve_hour = date('g:ia', strtotime($time));
-					
-					$hour = date('G', strtotime($time));
-					
-					// 05 will calculate the same as 50 unless we check if the 
-					// value is less than 10
-					if (date('i', strtotime($time)) < 10)
-						$minute_decimal = '0'.floor(1.66667 * date('i', strtotime($time)));
-					else
-						$minute_decimal = floor(1.66667 * date('i', strtotime($time)));
-					
-					$decimal = $hour.'.'.$minute_decimal;
-					
-					return array('twelve' => $twelve_hour, 'decimal' => $decimal);
-				}
-				
-				while ($class_data = $all_class_data->fetch()) {
-				
-					$days = convert_day_string($class_data['days']);
-					
-					// split string like "1:30pm-3:00pm" into beginning and end times
-					$times = explode('-', $class_data['time']);
-					
-					$start_time = convert_time($times[0]);
-					$end_time = convert_time($times[1]);					
-					$duration = $end_time['decimal'] - $start_time['decimal'];
-				
-					$seats_taken = $class_data['capacity'] - $class_data['remaining'];
-					
-					$seats_warning = '';
-					if ($seats_taken >= ($class_data['capacity']))
-						$seats_warning = 'warning';
-					
-					$course_repeat = '';
-					if ($class_data['course_number'] == $prev_course_number)
-						$course_repeat = 'repeat';
-					
-					echo '<div id="'.$class_data['crn'].'" class="class '.$course_repeat.'">';
-						echo '<span class="title">'.$class_data['title'].'</span>';
-						echo '<span class="credits" data-credits="'.$class_data['credits'].'">'.$class_data['credits'].'</span>';
-						echo '<span class="capacity '.$seats_warning.'">'.$seats_taken.'/'.$class_data['capacity'].'</span>';
-						echo '<span class="professor">'.$class_data['instructor'].'</span>';
-						echo '<div class="details">';
-							echo '<span class="when" data-days="'.$days.'" data-start="'.$start_time['decimal'].'" data-end="'.$end_time['decimal'].'" data-duration="'.$duration.'">';
-								echo $days.' - '.$start_time['twelve'].' to '.$end_time['twelve'];
-							echo '</span>';
-							echo '<span class="location">'.$class_data['location'].'</span>';
-							echo '<span class="date">'.$class_data['date'].'</span>';
-							echo '<span class="crn">'.$class_data['crn'].'</span>';
-							echo '<span class="course_number">'.$class_data['course_number'].'</span>';
-							echo '<span class="attribute">'.$class_data['attribute'].'</span>';
-						echo '</div>';
-					echo '</div>';
-					
-					// store for next loop to determine if its an alternative time
-					$prev_course_number = $class_data['course_number'];
-				}
-			
-			?>
-			<div id="bottom_pane" class="pane">
-				<div id="req_classes">
-					<span class="preview_text">Classes I need to take</span>
-					<div id="999" class="class">
-						<span class="title">Algorithms and Data</span>
-						<span class="credits" data-credits="4">4</span>
-						<span class="capacity ">28/60</span>
-						<span class="professor">Karl J. Lieberherr (P)</span>
-						<div class="details">
-							<span class="when" data-days="Monday, Wednesday" data-start="14.83" data-end="16.50" data-duration="1.67">Monday, Wednesday - 2:50pm to 4:30pm</span>
-							<span class="location">WVH 108</span>
-							<span class="date">09/07-12/07</span>
-							<span class="crn">11398</span>
-							<span class="course_number">4800</span>
-							<span class="attribute">NU Core Math/Anly Think Lvl 2 and Computer&amp;Info Sci</span>
-						</div>
-					</div>
-					<div id="999" class="class">
-						<span class="title">Algorithms and Data</span>
-						<span class="credits" data-credits="4">4</span>
-						<span class="capacity ">28/60</span>
-						<span class="professor">Karl J. Lieberherr (P)</span>
-						<div class="details">
-							<span class="when" data-days="Monday, Wednesday" data-start="14.83" data-end="16.50" data-duration="1.67">Monday, Wednesday - 2:50pm to 4:30pm</span>
-							<span class="location">WVH 108</span>
-							<span class="date">09/07-12/07</span>
-							<span class="crn">11398</span>
-							<span class="course_number">4800</span>
-							<span class="attribute">NU Core Math/Anly Think Lvl 2 and Computer&amp;Info Sci</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
-		<section id="weekview">
-			<div class="day color" id="Monday"></div>
-			<div class="day" id="Tuesday"></div>
-			<div class="day color" id="Wednesday"></div>
-			<div class="day" id="Thursday"></div>
-			<div class="day color" id="Friday"></div>
-			<div id="time_indicators">
-				<div>7am</div>
-				<div>8am</div>
-				<div>9am</div>
-				<div>10am</div>
-				<div>11am</div>
-				<div>12pm</div>
-				<div>1pm</div>
-				<div>2pm</div>
-				<div>3pm</div>
-				<div>4pm</div>
-				<div>5pm</div>
-				<div>6pm</div>
-				<div>7pm</div>
-				<div>8pm</div>
-				<div>9pm</div>
-			</div>
-		</section>
-	</body>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><?= $title ?></title>
+    <link type="text/css" href="css/normalize.css" rel="stylesheet" media="screen" />
+    <link type="text/css" href="css/screen.css" rel="stylesheet" media="screen" />
+    <script type="text/javascript" src="js/jquery-1.6.4.min.js"></script>
+    <script type="text/javascript" src="js/dataset.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
+  </head>
+  <body>
+    <section id="classes">
+      <div id="top_pane" class="pane">
+        <div id="filters">
+          <form>
+            <input class="filter_search" id="search_class" type="text" placeholder="Search by class name..." />
+            <input class="filter_search" id="search_professor" type="text" placeholder="Search by professor..." />
+            <select id="filter_sort">
+              <option>Sort by...</option>
+              <option>Name</option>
+              <option>CRN</option>
+              <option>Course number</option>
+            </select>
+            <span id="filter_credits">
+              <input type="checkbox" checked="checked" /> 1
+              <input type="checkbox" checked="checked" /> 2
+              <input type="checkbox" checked="checked" /> 3
+              <input type="checkbox" checked="checked" /> 4
+              credit(s)
+            </span>
+            <select id="filter_major">
+              <option>Select major...</option>
+              <option>Computer and Information Science</option>
+              <option>Graphic Design</option>
+            </select>
+          </form>
+        </div>
+      </div>
+      <?php
+
+      $all_class_data = $connection->query("SELECT * FROM classes");
+
+      // takes day string formatted like "MWR" and converts it to a
+      // full string like "Monday, Wednesday, Thursday"
+      function convert_day_string($day_string) {
+
+        $days_array = str_split($day_string);
+        foreach ($days_array as $key => $day) {
+          if (strtolower($day) == 'm')
+            $days_array[$key] = 'Monday';
+          if (strtolower($day) == 't')
+            $days_array[$key] = 'Tuesday';
+          if (strtolower($day) == 'w')
+            $days_array[$key] = 'Wednesday';
+          if (strtolower($day) == 'r')
+            $days_array[$key] = 'Thursday';
+          if (strtolower($day) == 'f')
+            $days_array[$key] = 'Friday';
+        }
+
+        return implode(', ', $days_array);
+      }
+
+      // takes a time string like "3:30pm" and converts it to a unix
+      // timestamp
+      // this funciton returns a 12 hour based time value like 3:30pm,
+      // and a decimal, 24 hour based time value like 15.5
+      function convert_time($time) {
+
+        $twelve_hour = date('g:ia', strtotime($time));
+
+        $hour = date('G', strtotime($time));
+
+        // 05 will calculate the same as 50 unless we check if the 
+        // value is less than 10
+        if (date('i', strtotime($time)) < 10)
+          $minute_decimal = '0'.floor(1.66667 * date('i', strtotime($time)));
+        else
+          $minute_decimal = floor(1.66667 * date('i', strtotime($time)));
+
+        $decimal = $hour.'.'.$minute_decimal;
+
+        return array('twelve' => $twelve_hour, 'decimal' => $decimal);
+      }
+
+      while ($class_data = $all_class_data->fetch()) {
+
+        $days = convert_day_string($class_data['days']);
+
+        // split string like "1:30pm-3:00pm" into beginning and end times
+        $times = explode('-', $class_data['time']);
+
+        $start_time = convert_time($times[0]);
+        $end_time = convert_time($times[1]);
+        $duration = $end_time['decimal'] - $start_time['decimal'];
+
+        $seats_taken = $class_data['capacity'] - $class_data['remaining'];
+
+        $seats_warning = '';
+        if ($seats_taken >= ($class_data['capacity']))
+          $seats_warning = 'warning';
+
+        $course_repeat = '';
+        if ($class_data['course_number'] == $prev_course_number)
+          $course_repeat = 'repeat';
+
+        echo '<div id="'.$class_data['crn'].'" class="class '.$course_repeat.'">';
+          echo '<span class="title">'.$class_data['title'].'</span>';
+          echo '<span class="credits" data-credits="'.$class_data['credits'].'">'.$class_data['credits'].'</span>';
+          echo '<span class="capacity '.$seats_warning.'">'.$seats_taken.'/'.$class_data['capacity'].'</span>';
+          echo '<span class="professor">'.$class_data['instructor'].'</span>';
+          echo '<div class="details">';
+            echo '<span class="when" data-days="'.$days.'" data-start="'.$start_time['decimal'].'" data-end="'.$end_time['decimal'].'" data-duration="'.$duration.'">';
+              echo $days.' - '.$start_time['twelve'].' to '.$end_time['twelve'];
+            echo '</span>';
+            echo '<span class="location">'.$class_data['location'].'</span>';
+            echo '<span class="date">'.$class_data['date'].'</span>';
+            echo '<span class="crn">'.$class_data['crn'].'</span>';
+            echo '<span class="course_number">'.$class_data['course_number'].'</span>';
+            echo '<span class="attribute">'.$class_data['attribute'].'</span>';
+          echo '</div>';
+        echo '</div>';
+
+        // store for next loop to determine if its an alternative time
+        $prev_course_number = $class_data['course_number'];
+      }
+
+      ?>
+    </section>
+    <section id="weekview">
+      <div class="day color" id="Monday"></div>
+      <div class="day" id="Tuesday"></div>
+      <div class="day color" id="Wednesday"></div>
+      <div class="day" id="Thursday"></div>
+      <div class="day color" id="Friday"></div>
+      <div id="time_indicators">
+        <div>7am</div>
+        <div>8am</div>
+        <div>9am</div>
+        <div>10am</div>
+        <div>11am</div>
+        <div>12pm</div>
+        <div>1pm</div>
+        <div>2pm</div>
+        <div>3pm</div>
+        <div>4pm</div>
+        <div>5pm</div>
+        <div>6pm</div>
+        <div>7pm</div>
+        <div>8pm</div>
+        <div>9pm</div>
+      </div>
+    </section>
+  </body>
 </html>
