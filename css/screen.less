@@ -1,4 +1,4 @@
-.box-shadow (@vdistance, @blur, @opacity) {
+.box-shadow(@vdistance, @blur, @opacity) {
   box-shadow:0 @vdistance @blur rgba(0,0,0,@opacity);
   -moz-box-shadow:0 @vdistance @blur rgba(0,0,0,@opacity);
   -webkit-box-shadow:0 @vdistance @blur rgba(0,0,0,@opacity);
@@ -22,6 +22,12 @@
   -webkit-border-radius:500px;
 }
 
+.border-box {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -33,8 +39,8 @@ body {
 }
 
 .pane {
-  width:30%;
   position:fixed;
+  width:30%;
 
   div {
     padding:1em;
@@ -43,9 +49,10 @@ body {
 
   &#top_pane {
     background:#ffffe5;
-    margin-top:-8.8em;
     border-bottom:1px solid #ccc;
+    margin-top:-168px;
     z-index:90;
+    .box-shadow(0px, 10px -2px, .4);
 
     span {
       display:block;
@@ -56,39 +63,33 @@ body {
         font-size:85%;
 
         .filter_search {
-          width:100%;
-          margin:0;
-          padding:.25em 0;
-          display:block;
-          border:none;
-          border-top:1px solid #ccc;
-          border-bottom:1px solid #ccc;
+          .border-box;
           .border-radius(5px);
-          text-indent:.5em;
+          .inset-box-shadow(1px, 2px, .15);
+          border:1px solid #ccc;
+          display:block;
+          margin:0;
           margin-bottom:.5em;
           outline:none;
+          padding:.5em;
+          width:100%;
 
           &:focus {
             border-color:#666;
           }
         }
 
-        #filter_sort {
-          border:1px solid #ccc;
-          float:left;
-          width:40%;
+        #filter_sort, #filter_major, #filter_credits {
           margin-bottom:.5em;
-        }
+          width: 100%;
 
-        #filter_credits {
-          float:left;
-          margin-left:.5em; 
-          clear:right;
+          input[type="checkbox"] {
+            margin-left: 4px;
+          }
         }
 
         #filter_major {
-          border:1px solid #ccc;
-          width:100%;
+          margin-bottom: 0;
         }
       }
     }
@@ -96,25 +97,24 @@ body {
 }
 
 #classes {
-  float: left;
-  width: 30%;
-  padding-top:8.8em;
-  position:relative;
-  z-index:30;
   .box-shadow(0, 9px, .3);
+  float: left;
+  padding-top:168px;
+  position:relative;
+  width: 30%;
+  z-index:30;
 
   .class {
+    border-top:1px solid #ccc;
     cursor:pointer;
     padding:1em;
-    border-top:1px solid #ccc;
 
     &.repeat {
       border:none;
-      font-size:85%;
-      padding-left:2em;
-      overflow:hidden;
       border-top:1px dashed #ccc;
-      //.inset-box-shadow(-2px, 3px, .15);
+      font-size:85%;
+      overflow:hidden;
+      padding-left:2em;
 
       span.title, span.credits, .details span.crn, 
       .details span.course_number, .details span.date, 
@@ -124,11 +124,11 @@ body {
 
       span.professor {
         .color_block {
-            display:inline-block;
-            height:.77em;
-            width:.77em;
-            margin-right:.25em;
-            border:1px solid #666;
+          border:1px solid #666;
+          display:inline-block;
+          height:.77em;
+          margin-right:.25em;
+          width:.77em;
         }
       }
 
@@ -150,25 +150,26 @@ body {
 
     span {
       display:block;
+
       &.title {
         font-size:125%;
         font-weight:bold;
         margin-bottom:.25em;
 
         .color_block {
-            display:inline-block;
-            height:.77em;
-            width:.77em;
-            margin-right:.25em;
-            border:1px solid #666;
+          border:1px solid #666;
+          display:inline-block;
+          height:.77em;
+          margin-right:.25em;
+          width:.77em;
         }
       }
 
       &.credits, &.capacity {
-        float:right;
-        padding:.1em .25em;
         background:#ddd;
+        float:right;
         margin-left:.15em;
+        padding:.1em .25em;
       }
 
       &.credits:after {
@@ -180,11 +181,12 @@ body {
         }
       }
     }
+
     .details {
+      border-top:1px dashed #ccc;
       display:none;
       margin-top:1em;
       padding-top:1em;
-      border-top:1px dashed #ccc;
 
       span {
         &.location:before {
@@ -204,6 +206,7 @@ body {
         }
       }
     }
+
     &:hover, &.active {
       background:#eee;
 
@@ -215,51 +218,51 @@ body {
 }
 
 #weekview {
-  width:70%;
   position:fixed;
   right:0;
+  width:70%;
 
   .day {
-    width:20%;
+    background:#eee;
     float:left;
     height:900px;
     position:relative;
-    background:#eee;
+    width:20%;
 
     &.color {
       background:#e0e0e0;
     }
 
     .cal_class {
-      cursor:pointer;
-      position:absolute;
-      z-index:10;
-      margin:0 5%;
-      width:90%;
-      .box-shadow(2px, 6px, .25);
       .border-radius(3px);
-      font-weight:bold;
+      .box-shadow(2px, 6px, .25);
       border:1px solid #666;
+      cursor:pointer;
+      font-weight:bold;
+      margin:0 5%;
       overflow:hidden;
+      position:absolute;
+      width:90%;
+      z-index:10;
 
       &.collision {
         border:1px solid red;
       }
 
       p {
-        padding:.5em;
         margin:0;
+        padding:.5em;
       }
 
       .details {
         display:none;
-        font-weight:normal;
         font-size:85%;
+        font-weight:normal;
         padding:.5em 0;
 
         span {
-          padding:0 .5em;
           display:block;
+          padding:0 .5em;
 
           &.credits:after {
             content: ' credit(s)';
@@ -301,20 +304,20 @@ body {
   }
 
   .collision_warning {
-    display:block;
-    background:red;
-    position:absolute;
-    z-index:20;
-    color:#fff;
-    width:30px;
-    height:30px;
-    line-height:30px;
-    left:90%;
-    text-align:center;
-    .circle;
     .box-shadow(2px, 6px, .35);
-    margin-top:3px;
+    .circle;
+    background:red;
+    color:#fff;
+    display:block;
     font-weight:bold;
+    height:30px;
+    left:90%;
+    line-height:30px;
+    margin-top:3px;
+    position:absolute;
+    text-align:center;
+    width:30px;
+    z-index:20;
   }
 
   #Friday .collision_warning {
@@ -323,13 +326,13 @@ body {
 
   #time_indicators {
     div {
-      position:absolute;
-      width:99%;
-      padding-right:1%;
       border-top:1px solid #c0c0c0;
       color:#333;
-      text-align:right;
       font-size:80%;
+      padding-right:1%;
+      position:absolute;
+      text-align:right;
+      width:99%;
     }
   }
 }

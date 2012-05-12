@@ -19,19 +19,20 @@
           <form>
             <input class="filter_search" id="search_class" type="text" placeholder="Search by class name..." />
             <input class="filter_search" id="search_professor" type="text" placeholder="Search by professor..." />
+            <span id="filter_credits">
+              <label>Include classes of</label>
+              <label><input type="checkbox" checked="checked" /> 1</label>
+              <label><input type="checkbox" checked="checked" /> 2</label>
+              <label><input type="checkbox" checked="checked" /> 3</label>
+              <label><input type="checkbox" checked="checked" /> 4</label>
+              credit(s)
+            </span>
             <select id="filter_sort">
               <option>Sort by...</option>
               <option>Name</option>
               <option>CRN</option>
               <option>Course number</option>
             </select>
-            <span id="filter_credits">
-              <input type="checkbox" checked="checked" /> 1
-              <input type="checkbox" checked="checked" /> 2
-              <input type="checkbox" checked="checked" /> 3
-              <input type="checkbox" checked="checked" /> 4
-              credit(s)
-            </span>
             <select id="filter_major">
               <option>Select major...</option>
               <option>Computer and Information Science</option>
