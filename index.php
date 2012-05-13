@@ -10,7 +10,14 @@
     <link type="text/css" href="css/screen.css" rel="stylesheet" media="screen" />
     <script type="text/javascript" src="js/jquery-1.6.4.min.js"></script>
     <script type="text/javascript" src="js/dataset.js"></script>
+    <script type="text/javascript" src="js/quicksilver.js"></script>
+    <script type="text/javascript" src="js/jquery.livesearch.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript">
+      $(function() {
+        $('#search').liveUpdate('.class').focus();
+      });
+    </script>
   </head>
   <body>
     <section id="classes">
