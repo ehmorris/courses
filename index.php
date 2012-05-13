@@ -17,8 +17,22 @@
       <div id="top_pane" class="pane">
         <div id="filters">
           <form>
-            <input class="filter_search" id="search_class" type="text" placeholder="Search by class name..." />
-            <input class="filter_search" id="search_professor" type="text" placeholder="Search by professor..." />
+            <select id="filter_major">
+              <option>Select category...</option>
+              <option>Computer and Information Science</option>
+              <option>Graphic Design</option>
+            </select>
+            <div class="search_toggle">
+              <a href="javascript:;">class</a>
+              <a href="javascript:;">prof</a>
+            </div>
+            <input class="filter_search" id="search" type="text" placeholder="Search by..." />
+            <select id="filter_sort">
+              <option>Sort by...</option>
+              <option>Name</option>
+              <option>CRN</option>
+              <option>Course number</option>
+            </select>
             <span id="filter_credits">
               <label>Include classes of</label>
               <label><input type="checkbox" checked="checked" /> 1</label>
@@ -27,17 +41,7 @@
               <label><input type="checkbox" checked="checked" /> 4</label>
               credit(s)
             </span>
-            <select id="filter_sort">
-              <option>Sort by...</option>
-              <option>Name</option>
-              <option>CRN</option>
-              <option>Course number</option>
-            </select>
-            <select id="filter_major">
-              <option>Select major...</option>
-              <option>Computer and Information Science</option>
-              <option>Graphic Design</option>
-            </select>
+            <input type="button" id="show-selected" value="Show selected classes only" />
           </form>
         </div>
       </div>

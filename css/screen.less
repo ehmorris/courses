@@ -33,7 +33,7 @@
 
 body {
   font-family:"Helvetica", "Lucida Grande", "Arial", "sans-serif";
-  input, select {
+  input, textarea, select {
     font:"Helvetica", "Lucida Grande", "Arial", "sans-serif";
   }  
 }
@@ -43,14 +43,14 @@ body {
   width:30%;
 
   div {
-    padding:1em;
+    padding:1em 1em .5em 1em;
     margin:0;
   }
 
   &#top_pane {
     background:#ffffe5;
     border-bottom:1px solid #ccc;
-    margin-top:-168px;
+    margin-top:-195px;
     z-index:90;
     .box-shadow(0px, 10px -2px, .4);
 
@@ -60,16 +60,16 @@ body {
 
     #filters {
       form {
-        font-size:85%;
+        overflow: hidden;
 
         .filter_search {
           .border-box;
           .border-radius(5px);
           .inset-box-shadow(1px, 2px, .15);
-          border:1px solid #ccc;
+          border:1px solid #999;
           display:block;
+          font-size: 85%;
           margin:0;
-          margin-bottom:.5em;
           outline:none;
           padding:.5em;
           width:100%;
@@ -79,17 +79,73 @@ body {
           }
         }
 
-        #filter_sort, #filter_major, #filter_credits {
-          margin-bottom:.5em;
-          width: 100%;
+        .search_toggle {
+          margin-top: .35em;
+          padding: 0;
+          position: absolute;
+          right: 1.35em;
 
-          input[type="checkbox"] {
-            margin-left: 4px;
+          a {
+            background: #eee;
+            border: 1px solid #999;
+            color: #333;
+            float: left;
+            font-size: 75%;
+            padding: .2em .75em;
+            text-decoration: none;
+
+            &:first-child {
+              .border-radius(3px 0 0 3px);
+              border-right: 0;
+            }
+
+            &:last-child {
+              .border-radius(0 3px 3px 0);
+            }
           }
         }
 
+        #filter_credits {
+          font-size: 85%;
+          text-align: center;
+        }
+
+        input[type="checkbox"] {
+          margin-left: 4px;
+        }
+
+        input[type="text"], input[type="button"], select, #filter_credits {
+          margin-bottom:8px;
+          width: 100%;
+        }
+
+        select {
+          margin-left: 1px;
+        }
+
         #filter_major {
-          margin-bottom: 0;
+          margin-bottom: 16px;
+        }
+
+        #show-selected {
+          .border-box;
+          .border-radius(4px);
+          .inset-box-shadow(-1px, 2px, .15);
+          background: #f3f3f3;
+          border: 1px solid #999;
+          font-size: 85%;
+          margin-top: 8px;
+          padding: .3em;
+
+          &:hover {
+            background: #fff;
+          }
+
+          &:active {
+            .inset-box-shadow(1px, 2px, .15);
+            background: #eee;
+            color: #666;
+          }
         }
       }
     }
@@ -99,7 +155,7 @@ body {
 #classes {
   .box-shadow(0, 9px, .3);
   float: left;
-  padding-top:168px;
+  padding-top:195px;
   position:relative;
   width: 30%;
   z-index:30;
@@ -108,12 +164,12 @@ body {
     border-top:1px solid #ccc;
     cursor:pointer;
     padding:1em;
+    position: relative;
 
     &.repeat {
       border:none;
       border-top:1px dashed #ccc;
       font-size:85%;
-      overflow:hidden;
       padding-left:2em;
 
       span.title, span.credits, .details span.crn, 
@@ -130,11 +186,6 @@ body {
           margin-right:.25em;
           width:.77em;
         }
-      }
-
-      .details {
-        border-top:none;
-        padding-top:0;
       }
     }
 
@@ -183,35 +234,83 @@ body {
     }
 
     .details {
-      border-top:1px dashed #ccc;
-      display:none;
-      margin-top:1em;
-      padding-top:1em;
+      display: none;
 
       span {
-        &.location:before {
-          content: 'Location: ';
+        margin-bottom: .25em;
+
+        &.when {
+          margin-bottom: .5em;
         }
-        &.date:before {
-          content: 'Date Range: ';
+
+        &::before {
+          font-weight: bold;
+          text-transform: uppercase;
         }
-        &.crn:before {
-          content: 'CRN: ';
+
+        &.location::before {
+          content: 'Location ';
         }
-        &.course_number:before {
-          content: 'Course Number: ';
+        &.date::before {
+          content: 'Date Range ';
         }
-        &.attribute:before {
-          content: 'Attributes: ';
+        &.crn::before {
+          content: 'CRN ';
+        }
+        &.course_number::before {
+          content: 'Course Num ';
+        }
+        &.attribute {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          &::before {
+            content: 'Attributes ';
+          }
         }
       }
     }
 
-    &:hover, &.active {
+    &:not(.active):hover {
       background:#eee;
 
       .details {
+        .border-radius(4px);
+        background: #000;
+        color: #fff;
         display:block;
+        font-size: .85rem;
+        left: 100%;
+        margin-left: 8px;
+        padding: 1em;
+        position: absolute;
+        top: -1px;
+        width: 75%;
+
+        &::before {
+          background: #000;
+          content: '';
+          height: 16px;
+          left: -8px;
+          -moz-transform: rotate(45deg);
+          position: absolute;
+          top: 15px;
+          transform: rotate(45deg);
+          -webkit-transform: rotate(45deg);
+          width: 16px;
+        }
+      }
+    }
+
+    &.active {
+      background:#eee;
+
+      .details {
+        border-top: 1px dashed #ccc;
+        display: block;
+        margin-top: 1em;
+        padding-top: 1em;
       }
     }
   }
@@ -261,37 +360,44 @@ body {
         padding:.5em 0;
 
         span {
+          border-bottom: 1px solid #ccc;
           display:block;
-          padding:0 .5em;
+          padding:.25em .5em;
 
-          &.credits:after {
+          &:last-child {
+            border: 0;
+          }
+
+          &.credits::after {
             content: ' credit(s)';
           }
-          &.capacity:after {
+          &.capacity::after {
             content: ' seats taken';
           }
-          &.professor:before {
+          &.professor::before {
             content: 'Prof: ';
           }
-          &.location:before {
+          &.location::before {
             content: 'Location: ';
           }
-          &.date:before {
+          &.date::before {
             content: 'Date Range: ';
           }
-          &.crn:before {
+          &.crn::before {
             content: 'CRN: ';
           }
-          &.course_number:before {
+          &.course_number::before {
             content: 'Course Number: ';
           }
-          &.attribute:before {
-            content: 'Attributes: ';
+          &.attribute {
+            font-style: italic;
           }
         }
       }
 
       &.active {
+        background: #fff !important;
+
         .summary {
           display:none;
         }
