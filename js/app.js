@@ -185,8 +185,8 @@ $(function() {
      * window is resized
      */
     $(window).resize(function() {
-      // only evaluate everything every 5 pixels
-      if (!(eval(parseInt(window.innerHeight) % 5))) {
+      // only evaluate everything every 2 pixels
+      if (!(eval(parseInt(window.innerHeight) % 2))) {
 
         MULTIPLIER = Math.floor(window.innerHeight / NUM_HOURS);
 
@@ -229,8 +229,7 @@ $(function() {
      */
     $('.class').click(function() {
 
-      var details = $(this).children('.details');
-      var when = $(details).children('.when');
+      var when = $(this).children('.details').children('.when');
 
       // get all of this course's basic info
       var crn = $(this).attr('id');
@@ -239,16 +238,7 @@ $(function() {
       var duration = $(when).dataset('duration');
       var title = $(this).children('.title').text();
 
-      // details vars
-      var course_number = $(details).children('.course_number').text();
-      var instructor = $(this).children('.professor').text();
-      var credits = $(this).children('.credits').text();
-      var seats = $(this).children('.capacity').text();
-      var location = $(details).children('.location').text();
-      var date = $(details).children('.date').text();
-      var attribute = $(details).children('.attribute').text();
-
-      /* check to make sure no recusions are visible (would indicate that 
+      /* check to make sure no recursions are visible (would indicate that 
        * course is already active) - if none are visible, activate course; 
        * otherwise, deactivate course
        */
@@ -290,19 +280,10 @@ $(function() {
           $('#'+this).append(
             '<div id="cal_class_'+crn+'_'+e+'"'+
               'class="cal_class"'+
+              'data-crn="'+crn+'"'+
               'data-start="'+start+'"'+
               'data-duration="'+duration+'">'+
             '<div class="summary"><p>'+title+'</p></div>'+
-              '<div class="details">'+
-              '<span class="crn">'+crn+'</span>'+
-              '<span class="course_number">'+course_number+'</span>'+
-              '<span class="professor">'+instructor+'</span>'+
-              '<span class="credits">'+credits+'</span>'+
-              '<span class="capacity">'+seats+'</span>'+
-              '<span class="location">'+location+'</span>'+
-              '<span class="date">'+date+'</span>'+
-              '<span class="attribute">'+attribute+'</span>'+
-              '</div>'+
             '</div>'
           );
 
@@ -354,31 +335,13 @@ $(function() {
      */
     $('.cal_class').live('click', function() {
 
-      $(this).toggleClass('active');
-      var details_height = $(this).children('.details').height();
+      var crn = $(this).data('crn');
 
-      /* increase height to accomodate details on activate
-       */
-      if ($(this).hasClass('active')) {
-        $(this).css('z-index', 90);
-        $(this).animate({
-          'height': details_height+'px',
-          'padding-bottom': '1em'
-        }, 30);
-      }
-
-      /* re-render the step on deactivate
-       */
-      else {
-        $(this).css({
-            'padding-bottom': '0',
-            'z-index': 10
-        });
-
-        var id = $(this).attr('id').substring(10);
-        var color = $(this).css('background-color');
-
-        render_cal_class(id, color, true);
-      }
+      // get position of class info in list
+      // jump to class info in list
+      window.scrollTo(
+        0, 
+        $('#'+crn).offset().top - $('#top_pane').outerHeight()
+      );
     });
 });

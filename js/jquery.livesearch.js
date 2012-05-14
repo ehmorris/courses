@@ -1,24 +1,24 @@
-jQuery.fn.liveUpdate = function(list){
+jQuery.fn.liveUpdate = function(list, child){
 	list = jQuery(list);
 
 	if ( list.length ) {
-		var rows = list.children('.title'),
+		var rows = list.children(child),
 			cache = rows.map(function(){
 				return this.innerHTML.toLowerCase();
 			});
-			
+
 		this
 			.keyup(filter).keyup()
 			.parents('form').submit(function(){
 				return false;
 			});
 	}
-		
+
 	return this;
-		
+
 	function filter(){
 		var term = jQuery.trim( jQuery(this).val().toLowerCase() ), scores = [];
-		
+
 		if ( !term ) {
 			rows.parent().show();
 		} else {

@@ -15,7 +15,16 @@
     <script type="text/javascript" src="js/app.js"></script>
     <script type="text/javascript">
       $(function() {
-        $('#search').liveUpdate('.class').focus();
+        $('#search').liveUpdate('.class', '.title').focus();
+
+        // toggle search targets
+        $('.search_toggle a').click(function() {
+          $('.search_toggle a').removeClass('active');
+          $(this).addClass('active');
+
+          var target = $(this).data('target');
+          $('#search').liveUpdate('.class', target).focus();
+        });
       });
     </script>
   </head>
@@ -30,8 +39,8 @@
               <option>Graphic Design</option>
             </select>
             <div class="search_toggle">
-              <a href="javascript:;">class</a>
-              <a href="javascript:;">prof</a>
+              <a href="javascript:;" data-target=".title" class="active">class</a>
+              <a href="javascript:;" data-target=".professor">prof</a>
             </div>
             <input class="filter_search" id="search" type="text" placeholder="Search by..." />
             <select id="filter_sort">
@@ -40,6 +49,7 @@
               <option>CRN</option>
               <option>Course number</option>
             </select>
+            <!--
             <span id="filter_credits">
               <label>Include classes of</label>
               <label><input type="checkbox" checked="checked" /> 1</label>
@@ -48,7 +58,7 @@
               <label><input type="checkbox" checked="checked" /> 4</label>
               credit(s)
             </span>
-            <input type="button" id="show-selected" value="Show selected classes only" />
+            -->
           </form>
         </div>
       </div>
