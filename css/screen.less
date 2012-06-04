@@ -143,6 +143,10 @@ body {
   width: 30%;
   z-index:30;
 
+  .class-list .class:first-child {
+    border-top: 0;
+  }
+
   .class {
     border-top:1px solid #ccc;
     cursor:pointer;
@@ -197,6 +201,10 @@ body {
           margin-right:.25em;
           width:.77em;
         }
+      }
+
+      &.subject {
+        display: none;
       }
 
       &.credits, &.capacity {

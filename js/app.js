@@ -227,7 +227,7 @@ $(function() {
 
     /* everything that happens when you click to reveal a class on the calendar
      */
-    $('.class').click(function() {
+    $('.class').live('click', function() {
 
       var when = $(this).children('.details').children('.when');
 
