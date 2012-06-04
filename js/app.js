@@ -3,6 +3,8 @@
  * Summary here http://creativecommons.org/licenses/by-nc/3.0/
  */
 
+
+
 /* constants used to optimize the calendar's display for any size screen
  */
 var START_HOUR = 7;
