@@ -180,6 +180,19 @@ function rgb2hex(rgb) {
   }
 }
 
+/* goes through all visible courses and gets their CRNs
+ */
+function finished() {
+  var crns = [];
+  $('.cal_class').each(function(e) {
+    // makes sure CRN is not a repeat of the previous CRN
+    if ($(this).data('crn') !== crns[e-1]) {
+      crns.push($(this).data('crn'));
+    }
+  });
+  console.log(crns);
+}
+
 // on page load
 $(function() {
 

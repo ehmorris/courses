@@ -108,5 +108,6 @@
         <div>9pm</div>
       </div>
     </section>
+    <a href="javascript:finished();" id="finished">Finished</a>
   </body>
 </html>

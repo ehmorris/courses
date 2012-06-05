@@ -8,7 +8,7 @@ if (isset($_POST['subject'])) :
 $subject = $_POST['subject'];
 
 // get all classes from a subject
-$all_class_data = $connection->query("SELECT * FROM classes WHERE subject = '$subject'");
+$all_class_data = $connection->query("SELECT * FROM classes WHERE subject = '$subject' AND time != 'TBA'");
 
 // takes day string formatted like "MWR" and converts it to a
 // full string like "Monday, Wednesday, Thursday"
