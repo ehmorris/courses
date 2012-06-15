@@ -2,10 +2,18 @@
 
 $title = 'Class Search';
 
-$hostname = getenv('MYSQL_DB_HOST');
-$username = getenv('MYSQL_USERNAME');
-$password = getenv('MYSQL_PASSWORD');
-$database = getenv('MYSQL_DB_NAME');
+if (getenv('MYSQL_DB_HOST')) {
+  $hostname = getenv('MYSQL_DB_HOST');
+  $username = getenv('MYSQL_USERNAME');
+  $password = getenv('MYSQL_PASSWORD');
+  $database = getenv('MYSQL_DB_NAME');
+}
+else {
+  $hostname = '127.0.0.1';
+  $username = 'root';
+  $password = '';
+  $database = 'classes';
+}
 
 try {
   $connection = new PDO("mysql:host=$hostname;dbname=$database", $username, $password);

@@ -71,8 +71,10 @@ while ($class_data = $all_class_data->fetch()) {
     $seats_warning = 'warning';
 
   $course_repeat = '';
-  if ($class_data['course_number'] == $prev_course_number)
-    $course_repeat = 'repeat';
+  if (isset($prev_course_number)) {
+    if ($class_data['course_number'] == $prev_course_number)
+      $course_repeat = 'repeat';
+  }
 
   echo '<div id="'.$class_data['crn'].'" class="class '.$course_repeat.'">';
     echo '<span class="title">'.$class_data['title'].'</span>';

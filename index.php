@@ -111,4 +111,3 @@
     <a href="javascript:finished();" id="finished">Finished</a>
   </body>
 </html>
->>>>>>> dff09f8ea7a905603e9d52a3cb9b246b9d9c8e96
