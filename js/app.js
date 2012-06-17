@@ -45,11 +45,24 @@ var COLORSh = ['#ac725e', '#d06b64', '#f83a22', '#fa573c', '#ff7537',
  * if not, it recursively sizes it down until it does; expects id to be
  * the id of a .cal_class dom object
  */
-function size_text(id) {
-  // get the height correct first, don't worry about the width
-  if ($(id).children('.summary').children('p')[0].scrollHeight >= $(id).height()) {
+function size_text(id, width_correct) {
+  var title_width = $(id).children('.summary').children('p')[0].scrollWidth;
+  var title_height = $(id).children('.summary').children('p')[0].scrollHeight;
+
+  // make sure the width is as large as possible
+  if (!width_correct && title_width <= $(id).innerWidth()) {
+    $(id).children('.summary').children('p').css('font-size', '+=1%');
+    size_text(id, false);
+  }
+  // make sure it's not too wide (for sizing the browser down)
+  else if (!width_correct && title_width >= $(id).innerWidth) {
     $(id).children('.summary').children('p').css('font-size', '-=1%');
-    size_text(id);
+    size_text(id, false);
+  }
+  // make sure the height fits, and tag the width sizing as done
+  else if (title_height >= $(id).height()) {
+    $(id).children('.summary').children('p').css('font-size', '-=1%');
+    size_text(id, true);
   }
 }
 
@@ -91,10 +104,10 @@ function render_cal_class(id, color, animate) {
       'width': '90%'
     }, 40, function() {
       // make sure text fits inside cell
-      size_text(id);
+      size_text(id, false);
     });
   } else {
-    size_text(id);
+    size_text(id, false);
   }
 }
 
@@ -195,168 +208,166 @@ function finished() {
 
 // on page load
 $(function() {
+  // size the class list
+  $('#classes').height(window.innerHeight);
 
-    /* update indicators, cal height, constants, cal events, etc. everytime the 
-     * window is resized
-     */
-    $(window).resize(function() {
-      // only evaluate everything every 2 pixels
-      if (!(eval(parseInt(window.innerHeight) % 2))) {
+  /* update indicators, cal height, constants, cal events, etc. everytime the 
+   * window is resized
+   */
+  $(window).resize(function() {
+    // only evaluate everything every 2 pixels
+    if (!(eval(parseInt(window.innerHeight) % 2))) {
 
-        MULTIPLIER = Math.floor(window.innerHeight / NUM_HOURS);
+      MULTIPLIER = Math.floor(window.innerHeight / NUM_HOURS);
 
-        $('.day').height(window.innerHeight);
+      $('#classes').height(window.innerHeight);
 
-        $('#time_indicators div').each(function(i) {
-          $(this).css('top', MULTIPLIER*i+'px');
-        });
+      $('.day').height(window.innerHeight);
 
-        /* to fix the .cal_class height when an expanded detail pane is 
-         * reverted
-         */
-        $('.cal_class.active').removeClass('active').css({
-          'padding-bottom': '0',
-          'z-index': 10
-        });
+      $('#time_indicators div').each(function(i) {
+        $(this).css('top', MULTIPLIER*i+'px');
+      });
 
-        $('.cal_class').each(function() {
-          var id = $(this).attr('id').substring(10);
-          var color = $(this).css('background-color');
-
-          render_cal_class(id, color);
-        });
-
-        detect_collisions();
-      }
-    });
-
-    /* set calendar height
-     */
-    $('.day').height(window.innerHeight);
-
-    /* space out time indicators
-     */
-    $('#time_indicators div').each(function(i) {
-      $(this).css('top', MULTIPLIER*i+'px');
-    });
-
-    /* everything that happens when you click to reveal a class on the calendar
-     */
-    $('.class').live('click', function() {
-
-      var when = $(this).children('.details').children('.when');
-
-      // get all of this course's basic info
-      var crn = $(this).attr('id');
-      var days = $(when).dataset('days');
-      var start = $(when).dataset('start');
-      var duration = $(when).dataset('duration');
-      var title = $(this).children('.title').text();
-
-      /* check to make sure no recursions are visible (would indicate that 
-       * course is already active) - if none are visible, activate course; 
-       * otherwise, deactivate course
+      /* to fix the .cal_class height when an expanded detail pane is 
+       * reverted
        */
-      if (!($('#cal_class_'+crn+'_0').length)) {
+      $('.cal_class.active').removeClass('active').css({
+        'padding-bottom': '0',
+        'z-index': 10
+      });
 
-        // get random color to color the course and its calendar events
-        var rand_color_array_key = Math.floor(Math.random()*COLORS.length);
-        var color = COLORS[rand_color_array_key];
+      $('.cal_class').each(function() {
+        var id = $(this).attr('id').substring(10);
+        var color = $(this).css('background-color');
 
-        // remove selected color from array to prevent duplicate colors
-        COLORS.splice([rand_color_array_key], 1);
+        render_cal_class(id, color);
+      });
 
-        // activate and add color block to clicked course
-        $(this).addClass('active');
-        // if it's a repeat class with a hidden title
-        if ($(this).hasClass('repeat')) {
-          $(this).children('.professor').prepend(
-            '<span style="background:'+color+';" class="color_block">'+
-                '&nbsp;'+
-            '</span>'
-          );
-        } else {
-          $(this).children('.title').prepend(
-            '<span style="background:'+color+';" class="color_block">'+
-                '&nbsp;'+
-            '</span>'
-          );
-        }
+      detect_collisions();
+    }
+  });
 
-        // split days string into an array which we can loop through
-        var days_array = days.split(', ');
+  /* set calendar height
+   */
+  $('.day').height(window.innerHeight);
 
-        // loop through each day and place all iterations of a course
-        $(days_array).each(function(e) {
+  /* space out time indicators
+   */
+  $('#time_indicators div').each(function(i) {
+    $(this).css('top', MULTIPLIER*i+'px');
+  });
 
-          /* need to give each calendar item / each recursion of an item 
-           * a unique id for it to be placed correctly
+  /* everything that happens when you click to reveal a class on the calendar
+   */
+  $('.class').live('click', function() {
+
+    var when = $(this).children('.details').children('.when');
+
+    // get all of this course's basic info
+    var crn = $(this).attr('id');
+    var days = $(when).dataset('days');
+    var start = $(when).dataset('start');
+    var duration = $(when).dataset('duration');
+    var title = $(this).children('.title').text();
+
+    /* check to make sure no recursions are visible (would indicate that 
+     * course is already active) - if none are visible, activate course; 
+     * otherwise, deactivate course
+     */
+    if (!($('#cal_class_'+crn+'_0').length)) {
+
+      // get random color to color the course and its calendar events
+      var rand_color_array_key = Math.floor(Math.random()*COLORS.length);
+      var color = COLORS[rand_color_array_key];
+
+      // remove selected color from array to prevent duplicate colors
+      COLORS.splice([rand_color_array_key], 1);
+
+      // activate and add color block to clicked course
+      $(this).addClass('active');
+      // if it's a repeat class with a hidden title
+      if ($(this).hasClass('repeat')) {
+        $(this).children('.professor').prepend(
+          '<span style="background:'+color+';" class="color_block">'+
+              '&nbsp;'+
+          '</span>'
+        );
+      } else {
+        $(this).children('.title').prepend(
+          '<span style="background:'+color+';" class="color_block">'+
+              '&nbsp;'+
+          '</span>'
+        );
+      }
+
+      // split days string into an array which we can loop through
+      var days_array = days.split(', ');
+
+      // loop through each day and place all iterations of a course
+      $(days_array).each(function(e) {
+
+        /* need to give each calendar item / each recursion of an item 
+         * a unique id for it to be placed correctly
+         */
+        $('#'+this).append(
+          '<div id="cal_class_'+crn+'_'+e+'"'+
+            'class="cal_class"'+
+            'data-crn="'+crn+'"'+
+            'data-start="'+start+'"'+
+            'data-duration="'+duration+'">'+
+          '<div class="summary"><p>'+title+'</p></div>'+
+          '</div>'
+        );
+
+        // place, color, animate, etc. the added course
+        render_cal_class(crn+'_'+e, color, true);
+      });
+
+      // run anytime a course has been activated
+      detect_collisions();
+    }
+
+    /* events exists: remove event and deactivate course
+     */
+    else {
+
+      /* don't know how many days this event recurs, so just try to 
+       * remove up to 5 recursions
+       */
+      for (var i = 0; i < 5; i++) {
+
+        $('#cal_class_'+crn+'_'+i).animate({
+          'opacity': 0,
+          'top': '-=30px'
+        }, 80, function() {
+
+          $(this).remove();
+
+          /* run anytime a course has been deactivated, to remove any 
+           * warnings for solved collisions; have to run after 
+           * animation is complete
            */
-          $('#'+this).append(
-            '<div id="cal_class_'+crn+'_'+e+'"'+
-              'class="cal_class"'+
-              'data-crn="'+crn+'"'+
-              'data-start="'+start+'"'+
-              'data-duration="'+duration+'">'+
-            '<div class="summary"><p>'+title+'</p></div>'+
-            '</div>'
-          );
-
-          // place, color, animate, etc. the added course
-          render_cal_class(crn+'_'+e, color, true);
+          detect_collisions();
         });
-
-        // run anytime a course has been activated
-        detect_collisions();
       }
 
-      /* events exists: remove event and deactivate course
-       */
-      else {
+      var replace_color = $(this).find('.color_block')
+                                 .css('background-color');
+      // replace_color = rgb2hex(replace_color);
 
-        /* don't know how many days this event recurs, so just try to 
-         * remove up to 5 recursions
-         */
-        for (var i = 0; i < 5; i++) {
+      // replace the disabled color into the color array
+      COLORS.push(replace_color);
 
-          $('#cal_class_'+crn+'_'+i).animate({
-            'opacity': 0,
-            'top': '-=15px'
-          }, 60, function() {
+      $(this).removeClass('active');
+      $(this).find('.color_block').remove();
+    }
+  });
 
-            $(this).remove();
+  /* reveal detailed info on click of a calendar item
+   */
+  $('.cal_class').live('click', function() {
 
-            /* run anytime a course has been deactivated, to remove any 
-             * warnings for solved collisions; have to run after 
-             * animation is complete
-             */
-            detect_collisions();
-          });
-        }
+    var crn = $(this).data('crn');
 
-        var replace_color = $(this).find('.color_block')
-                                   .css('background-color');
-        // replace_color = rgb2hex(replace_color);
-
-        // replace the disabled color into the color array
-        COLORS.push(replace_color);
-
-        $(this).removeClass('active');
-        $(this).find('.color_block').remove();
-      }
-    });
-
-    /* reveal detailed info on click of a calendar item
-     */
-    $('.cal_class').live('click', function() {
-
-      var crn = $(this).data('crn');
-
-      // get position of class info in list
-      // jump to class info in list
-      window.scrollTo(
-        0, 
-        $('#'+crn).offset().top - $('#top_pane').outerHeight()
-      );
-    });
+  });
 });

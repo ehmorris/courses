@@ -32,25 +32,25 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 body {
-  font-family:"Helvetica", "Lucida Grande", "Arial", "sans-serif";
+  font-family: "Helvetica", "Lucida Grande", "Arial", "sans-serif";
+
   input, textarea, select {
-    font:"Helvetica", "Lucida Grande", "Arial", "sans-serif";
+    font: "Helvetica", "Lucida Grande", "Arial", "sans-serif";
   }  
 }
 
 .pane {
-  position:fixed;
-  width:30%;
+  position: fixed;
+  width: 30%;
 
   div {
-    padding:1em 1em .5em 1em;
-    margin:0;
+    padding: 1em 1em .5em 1em;
+    margin: 0;
   }
 
   &#top_pane {
     background:#ffffe5;
     border-bottom:1px solid #ccc;
-    margin-top:-129px;
     z-index:90;
     .box-shadow(0px, 10px -2px, .4);
 
@@ -138,10 +138,15 @@ body {
 #classes {
   .box-shadow(0, 9px, .3);
   float: left;
-  padding-top:129px;
-  position:relative;
+  overflow: auto;
+  position: relative;
+  -webkit-overflow-scrolling: touch;
   width: 30%;
-  z-index:30;
+  z-index: 30;
+
+  .class-list {
+    margin-top: 129px;
+  }
 
   .class-list .class:first-child {
     border-top: 0;
@@ -265,33 +270,6 @@ body {
 
     &:not(.active):hover {
       background:#eee;
-
-      .details {
-        .border-radius(4px);
-        background: #000;
-        color: #fff;
-        display:block;
-        font-size: .85rem;
-        left: 100%;
-        margin-left: 8px;
-        padding: 1em;
-        position: absolute;
-        top: -1px;
-        width: 75%;
-
-        &::before {
-          background: #000;
-          content: '';
-          height: 16px;
-          left: -8px;
-          -moz-transform: rotate(45deg);
-          position: absolute;
-          top: 15px;
-          transform: rotate(45deg);
-          -webkit-transform: rotate(45deg);
-          width: 16px;
-        }
-      }
     }
 
     &.active {
@@ -314,9 +292,9 @@ body {
 }
 
 #weekview {
-  position:fixed;
-  right:0;
-  width:70%;
+  float: right;
+  position: relative;
+  width: 70%;
 
   .day {
     background:#eee;
@@ -417,13 +395,14 @@ body {
 
   #time_indicators {
     div {
+      .border-box;
       border-top:1px solid #c0c0c0;
       color:#333;
       font-size:80%;
-      padding-right:1%;
+      padding-right:1.5%;
       position:absolute;
       text-align:right;
-      width:99%;
+      width:100%;
     }
   }
 }
