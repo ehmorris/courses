@@ -42,8 +42,10 @@ var COLORSh = ['#ac725e', '#d06b64', '#f83a22', '#fa573c', '#ff7537',
                '#cca6ac', '#f691b2', '#cd74e6', '#a47ae2'];
 
 /* checks if the text of a calendar item fits within the visible area;
- * if not, it recursively sizes it down until it does; expects id to be
- * the id of a .cal_class dom object
+ * if too small, it recursively sizes it up until its width fits, then
+ * it makes sure the height fits, and if it doesn't, it sizes it down
+ * if the width is too large, it's also sized down - uses a flag to prevent
+ * infinite recursion; expects id to be the id of a .cal_class dom object
  */
 function size_text(id, width_correct) {
   var title_width = $(id).children('.summary').children('p')[0].scrollWidth;
@@ -59,7 +61,7 @@ function size_text(id, width_correct) {
     $(id).children('.summary').children('p').css('font-size', '-=1%');
     size_text(id, false);
   }
-  // make sure the height fits, and tag the width sizing as done
+  // make sure the height fits, and flag the width sizing as done
   else if (title_height >= $(id).height()) {
     $(id).children('.summary').children('p').css('font-size', '-=1%');
     size_text(id, true);
