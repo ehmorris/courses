@@ -48,11 +48,11 @@
               <option>Select subject...</option>
               <?php
 
-                $all_subjects_data = $connection->query("SELECT DISTINCT subject FROM classes ORDER BY subject");
+                $all_subjects_data = $connection->query("SELECT * FROM subjects ORDER BY subject_fulltext");
 
                 while ($subjects_data = $all_subjects_data->fetch()) {
 
-                  echo '<option>' . $subjects_data['subject'] . '</option>';
+                  echo '<option value="'. $subjects_data['subject_acronym'] .'">' . $subjects_data['subject_fulltext'] . '</option>';
 
                 }
 
