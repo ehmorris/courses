@@ -141,8 +141,13 @@ body {
   overflow: auto;
   position: relative;
   -webkit-overflow-scrolling: touch;
+  -webkit-transition: width .8s ease;
   width: 30%;
   z-index: 30;
+
+  &.full {
+    width: 70%;
+  }
 
   .class-list {
     margin-top: 129px;
@@ -292,9 +297,15 @@ body {
 }
 
 #weekview {
+  background: #e0e0e0;
   float: right;
   position: relative;
+  -webkit-transition: width .8s ease;
   width: 70%;
+
+  &.minified {
+    width: 30%;
+  }
 
   .day {
     background:#eee;
@@ -324,50 +335,9 @@ body {
       }
 
       p {
-        margin:0;
-        padding:.5em;
-      }
-
-      .details {
-        display:none;
-        font-size:85%;
-        font-weight:normal;
-        padding:.5em 0;
-
-        span {
-          border-bottom: 1px solid #ccc;
-          display:block;
-          padding:.25em .5em;
-
-          &:last-child {
-            border: 0;
-          }
-
-          &.credits::after {
-            content: ' credit(s)';
-          }
-          &.capacity::after {
-            content: ' seats taken';
-          }
-          &.professor::before {
-            content: 'Prof: ';
-          }
-          &.location::before {
-            content: 'Location: ';
-          }
-          &.date::before {
-            content: 'Date Range: ';
-          }
-          &.crn::before {
-            content: 'CRN: ';
-          }
-          &.course_number::before {
-            content: 'Course Number: ';
-          }
-          &.attribute {
-            font-style: italic;
-          }
-        }
+        display: inline-block;
+        margin: 0;
+        padding: .5em;
       }
     }
   }
@@ -403,6 +373,10 @@ body {
       position:absolute;
       text-align:right;
       width:100%;
+
+      &:first-child {
+        border-top: none;
+      }
     }
   }
 }
@@ -410,7 +384,7 @@ body {
 #finished {
   .border-box;
   .border-radius(3px);
-  background:#18ff21;
+  background:#ccc;
   border: 1px solid #666;
   bottom: .5em;
   color: #000;
@@ -418,6 +392,21 @@ body {
   padding: .6em 1em;
   position: fixed;
   right: .5em;
+  text-decoration: none;
+  z-index: 100;
+}
+
+#expand-classes {
+  .border-box;
+  .border-radius(3px);
+  background:#ccc;
+  border: 1px solid #666;
+  bottom: .5em;
+  color: #000;
+  font-size: 80%;
+  padding: .6em 1em;
+  position: fixed;
+  right: 7em;
   text-decoration: none;
   z-index: 100;
 }

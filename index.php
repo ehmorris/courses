@@ -84,6 +84,8 @@
       </div>
       <section class="class-list"><!-- class list --></section>
     </section>
+    <a href="javascript:finished();" id="finished">Finished</a>
+    <a href="javascript:expand_classes();" id="expand-classes">Expand</a>
     <section id="weekview">
       <div class="day color" id="Monday"></div>
       <div class="day" id="Tuesday"></div>
@@ -108,6 +110,5 @@
         <div>9pm</div>
       </div>
     </section>
-    <a href="javascript:finished();" id="finished">Finished</a>
   </body>
 </html>

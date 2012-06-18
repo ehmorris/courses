@@ -48,22 +48,35 @@ var COLORSh = ['#ac725e', '#d06b64', '#f83a22', '#fa573c', '#ff7537',
  * infinite recursion; expects id to be the id of a .cal_class dom object
  */
 function size_text(id, width_correct) {
-  var title_width = $(id).children('.summary').children('p')[0].scrollWidth;
-  var title_height = $(id).children('.summary').children('p')[0].scrollHeight;
+  var title_scroll_width = $(id).children('.summary').children('p')[0].scrollWidth;
+  var title_scroll_height = $(id).children('.summary').children('p')[0].scrollHeight;
+  var title_max_width = $(id).innerWidth();
 
   // make sure the width is as large as possible
-  if (!width_correct && title_width <= $(id).innerWidth()) {
-    $(id).children('.summary').children('p').css('font-size', '+=1%');
+  if (!width_correct && title_scroll_width < title_max_width) {
+    console.log('1: '+title_scroll_width+'<'+title_max_width);
+    $(id).children('.summary').children('p').css('font-size', '+=1px');
     size_text(id, false);
   }
   // make sure it's not too wide (for sizing the browser down)
-  else if (!width_correct && title_width >= $(id).innerWidth) {
-    $(id).children('.summary').children('p').css('font-size', '-=1%');
-    size_text(id, false);
+  else if (!width_correct && title_scroll_width > title_max_width) {
+    console.log('2: '+title_scroll_width+'>'+title_max_width);
+    $(id).children('.summary').children('p').css('font-size', '-=1px');
+
+    // prevent recursion when padding causes changing width to always be
+    // above or below the title_max_width
+    if (title_scroll_width < (title_max_width + 10) &&
+        title_scroll_width > (title_max_width - 10)) {
+      size_text(id, true);
+    }
+    else {
+      size_text(id, false);
+    }
   }
   // make sure the height fits, and flag the width sizing as done
-  else if (title_height >= $(id).height()) {
-    $(id).children('.summary').children('p').css('font-size', '-=1%');
+  else if (title_scroll_height > $(id).height()) {
+    console.log('3: '+title_scroll_height+'>'+$(id).height());
+    $(id).children('.summary').children('p').css('font-size', '-=1px');
     size_text(id, true);
   }
 }
@@ -111,6 +124,15 @@ function render_cal_class(id, color, animate) {
   } else {
     size_text(id, false);
   }
+}
+
+function render_classes() {
+  $('.cal_class').each(function() {
+    var id = $(this).attr('id').substring(10);
+    var color = $(this).css('background-color');
+
+    render_cal_class(id, color);
+  });
 }
 
 /* displays a warning near the overlapping area of a collision; helper function
@@ -208,6 +230,13 @@ function finished() {
   console.log(crns);
 }
 
+/* expand the class search view, minify the calendar
+ */
+function expand_classes() {
+  $('#classes').toggleClass('full');
+  $('#weekview').toggleClass('minified');
+}
+
 // on page load
 $(function() {
   // size the class list
@@ -230,20 +259,7 @@ $(function() {
         $(this).css('top', MULTIPLIER*i+'px');
       });
 
-      /* to fix the .cal_class height when an expanded detail pane is 
-       * reverted
-       */
-      $('.cal_class.active').removeClass('active').css({
-        'padding-bottom': '0',
-        'z-index': 10
-      });
-
-      $('.cal_class').each(function() {
-        var id = $(this).attr('id').substring(10);
-        var color = $(this).css('background-color');
-
-        render_cal_class(id, color);
-      });
+      render_classes();
 
       detect_collisions();
     }
@@ -368,8 +384,6 @@ $(function() {
   /* reveal detailed info on click of a calendar item
    */
   $('.cal_class').live('click', function() {
-
     var crn = $(this).data('crn');
-
   });
 });
