@@ -54,13 +54,11 @@ function size_text(id, width_correct) {
 
   // make sure the width is as large as possible
   if (!width_correct && title_scroll_width < title_max_width) {
-    console.log('1: '+title_scroll_width+'<'+title_max_width);
     $(id).children('.summary').children('p').css('font-size', '+=1px');
     size_text(id, false);
   }
   // make sure it's not too wide (for sizing the browser down)
   else if (!width_correct && title_scroll_width > title_max_width) {
-    console.log('2: '+title_scroll_width+'>'+title_max_width);
     $(id).children('.summary').children('p').css('font-size', '-=1px');
 
     // prevent recursion when padding causes changing width to always be
@@ -75,7 +73,6 @@ function size_text(id, width_correct) {
   }
   // make sure the height fits, and flag the width sizing as done
   else if (title_scroll_height > $(id).height()) {
-    console.log('3: '+title_scroll_height+'>'+$(id).height());
     $(id).children('.summary').children('p').css('font-size', '-=1px');
     size_text(id, true);
   }
